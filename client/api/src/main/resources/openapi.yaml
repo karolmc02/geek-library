@@ -1,0 +1,173 @@
+openapi: 3.0.4
+info:
+  title: Geek Library Client API
+  description: API definition for Geek Library client
+  version: 1.0.0
+  contact:
+    name: Geek Library Support
+    email: support@geeklibrary.com
+servers:
+  - url: http://localhost:8080/api
+tags:
+  - name: works
+    description: Operations related to works in the Geek Library
+paths:
+  /works:
+    get:
+      summary: Query works
+      operationId: queryWorks
+      description: Retrieve a list of works from the Geek Library client API.
+      tags:
+        - works
+      parameters:
+        - name: title
+          in: query
+          description: Title of the work to search for
+          required: false
+          schema:
+            type: string
+        - name: author
+          in: query
+          description: Author of the work to search for
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  works:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/work'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+    post:
+      summary: Create a new work
+      operationId: createWork
+      description: Create a new work in the Geek Library client API.
+      tags:
+        - works
+      requestBody:
+        description: Work object to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/work'
+      responses:
+        '201':
+          description: Work created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/work'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /works/{id}:
+    get:
+      summary: Get work by ID
+      operationId: getWorkById
+      description: Retrieve a specific work by its ID from the Geek Library client API.
+      tags:
+        - works
+      parameters:
+        - $ref: '#/components/parameters/workId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/work'
+        '404':
+          description: Work not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update work by ID
+      operationId: updateWorkById
+      description: Update a specific work by its ID in the Geek Library client API.
+      tags:
+        - works
+      parameters:
+        - $ref: '#/components/parameters/workId'
+      requestBody:
+        description: Work object with updated information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/work'
+      responses:
+        '200':
+          description: Work updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/work'
+        '400':
+          description: Bad request
+        '404':
+          description: Work not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete work by ID
+      operationId: deleteWorkById
+      description: Delete a specific work by its ID from the Geek Library client API.
+      tags:
+        - works
+      parameters:
+        - $ref: '#/components/parameters/workId'
+      responses:
+        '204':
+          description: Work deleted successfully
+        '404':
+          description: Work not found
+        '500':
+          description: Internal server error
+components:
+  parameters:
+    workId:
+      name: id
+      in: path
+      description: ID of the work
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    work:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        autor:
+          $ref: '#/components/schemas/person'
+        illustrator:
+          $ref: '#/components/schemas/person'
+      required:
+        - title
+        - description
+        - autor
+    person:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string

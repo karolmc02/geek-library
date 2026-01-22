@@ -7,12 +7,17 @@
         <artifactId>geek-library</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>infraestructure</artifactId>
+    <artifactId>geek-library-infraestructure</artifactId>
     <name>infraestructure</name>
     <dependencies>
         <dependency>
-            <groupId>com.geekapps</groupId>
-            <artifactId>application</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>geek-library-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>geek-library-client-api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

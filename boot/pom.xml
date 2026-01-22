@@ -11,8 +11,8 @@
     <name>boot</name>
     <dependencies>
         <dependency>
-            <groupId>com.geekapps</groupId>
-            <artifactId>infraestructure</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>geek-library-infraestructure</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -1,9 +1,9 @@
-package com.geekapps.geeklibrary.domain.work;
+package com.geekapps.geeklibrary.domain.model.work;
 
 import java.util.UUID;
 
-import com.geekapps.geeklibrary.domain.common.AggregateRoot;
-import com.geekapps.geeklibrary.domain.common.Person;
+import com.geekapps.geeklibrary.domain.model.common.AggregateRoot;
+import com.geekapps.geeklibrary.domain.model.common.Person;
 
 public abstract class Work extends AggregateRoot {
 

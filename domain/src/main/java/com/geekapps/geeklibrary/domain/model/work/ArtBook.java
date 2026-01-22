@@ -1,8 +1,8 @@
-package com.geekapps.geeklibrary.domain.work;
+package com.geekapps.geeklibrary.domain.model.work;
 
 import java.util.UUID;
 
-import com.geekapps.geeklibrary.domain.common.Person;
+import com.geekapps.geeklibrary.domain.model.common.Person;
 
 public class ArtBook extends Work {
 

@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.domain.common;
+package com.geekapps.geeklibrary.domain.model.common;
 
 import java.util.Objects;
 import java.util.UUID;

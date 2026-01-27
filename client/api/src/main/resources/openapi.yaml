@@ -156,14 +156,14 @@ components:
           type: string
         description:
           type: string
-        autor:
+        author:
           $ref: '#/components/schemas/person'
         illustrator:
           $ref: '#/components/schemas/person'
       required:
         - title
         - description
-        - autor
+        - author
     person:
       type: object
       properties:

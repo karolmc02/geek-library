@@ -146,12 +146,20 @@ components:
         type: string
         format: uuid
   schemas:
+    workType:
+      type: string
+      enum:
+        - MANGA
+        - ARTBOOK
+        - LIGHT_NOVEL
     work:
       type: object
       properties:
         id:
           type: string
           format: uuid
+        type:
+          $ref: '#/components/schemas/workType'
         title:
           type: string
         description:

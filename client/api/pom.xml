@@ -44,6 +44,7 @@
             </goals>
             <configuration>
               <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
+              <modelNameSuffix>DTO</modelNameSuffix>
               <generatorName>spring</generatorName>
               <configOptions>
                 <useSpringBoot3>true</useSpringBoot3>

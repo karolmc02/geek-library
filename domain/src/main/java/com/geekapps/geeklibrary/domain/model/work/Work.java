@@ -11,14 +11,21 @@ public abstract class Work extends AggregateRoot {
 
   protected String description;
 
-  protected Person autor;
+  protected Person author;
 
   protected Person illustrator;
 
-  public Work(UUID id, String title, Person autor, Person illustrator, String description) {
+  public Work(UUID id, String title, String description, Person author, Person illustrator) {
     super(id);
     this.title = title;
-    this.autor = autor;
+    this.description = description;
+    this.author = author;
+    this.illustrator = illustrator;
+  }
+
+  public Work(String title, String description, Person author, Person illustrator) {
+    this.title = title;
+    this.author = author;
     this.illustrator = illustrator;
     this.description = description;
   }
@@ -39,12 +46,12 @@ public abstract class Work extends AggregateRoot {
     this.description = description;
   }
 
-  public Person getAutor() {
-    return autor;
+  public Person getAuthor() {
+    return author;
   }
 
-  public void setAutor(Person autor) {
-    this.autor = autor;
+  public void setAuthor(Person autor) {
+    this.author = autor;
   }
 
   @Override
@@ -53,7 +60,7 @@ public abstract class Work extends AggregateRoot {
     int result = super.hashCode();
     result = prime * result + ((title == null) ? 0 : title.hashCode());
     result = prime * result + ((description == null) ? 0 : description.hashCode());
-    result = prime * result + ((autor == null) ? 0 : autor.hashCode());
+    result = prime * result + ((author == null) ? 0 : author.hashCode());
     result = prime * result + ((illustrator == null) ? 0 : illustrator.hashCode());
     return result;
   }
@@ -79,10 +86,10 @@ public abstract class Work extends AggregateRoot {
         return false;
     } else if (!description.equals(other.description))
       return false;
-    if (autor == null) {
-      if (other.autor != null)
+    if (author == null) {
+      if (other.author != null)
         return false;
-    } else if (!autor.equals(other.autor))
+    } else if (!author.equals(other.author))
       return false;
     if (illustrator == null) {
       if (other.illustrator != null)
@@ -94,7 +101,7 @@ public abstract class Work extends AggregateRoot {
 
   @Override
   public String toString() {
-    return "Work [id=" + id + ", title=" + title + ", description=" + description + ", autor=" + autor
+    return "Work [id=" + id + ", title=" + title + ", description=" + description + ", author=" + author
         + ", illustrator=" + illustrator + "]";
   }
 

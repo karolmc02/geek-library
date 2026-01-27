@@ -1,13 +1,16 @@
 package com.geekapps.geeklibrary.domain.model.work;
 
 import java.util.UUID;
-
 import com.geekapps.geeklibrary.domain.model.common.Person;
 
 public class ArtBook extends Work {
 
-  public ArtBook(UUID id, String title, Person autor, Person illustrator, String description) {
-    super(id, title, autor, illustrator, description);
+  public ArtBook(final UUID id, final String title, final String description, final Person author, final Person illustrator) {
+    super(id, title, description, author, illustrator);
+  }
+
+  public ArtBook(final String title, final String description, final Person author, final Person illustrator) {
+    super(title, description, author, illustrator);
   }
 
 }

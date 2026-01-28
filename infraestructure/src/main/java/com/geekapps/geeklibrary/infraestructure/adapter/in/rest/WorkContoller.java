@@ -11,6 +11,7 @@ import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMappe
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import port.in.CreateWorkUseCase;
+import port.in.QueryWorksUseCase;
 
 @RestController
 public class WorkContoller implements WorksApi {
@@ -19,9 +20,13 @@ public class WorkContoller implements WorksApi {
 
   private final CreateWorkUseCase createWorkUseCase;
 
-  public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase) {
+  private final QueryWorksUseCase queryWorksUseCase;
+
+  public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
+      final QueryWorksUseCase queryWorksUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
+    this.queryWorksUseCase = queryWorksUseCase;
   }
 
   @Override
@@ -47,8 +52,11 @@ public class WorkContoller implements WorksApi {
   @Override
   public ResponseEntity<QueryWorks200ResponseDTO> queryWorks(@Nullable @Valid final String title,
       @Nullable @Valid final String author) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'queryWorks'");
+    final var queryWorksCommand = this.workMapper.toQueryWorksCommand(title, author);
+    final var works = this.queryWorksUseCase.execute(queryWorksCommand);
+    final var workDTOs = this.workMapper.toWorkDTOList(works);
+    final var response = new QueryWorks200ResponseDTO().works(workDTOs);
+    return ResponseEntity.ok().body(response);
   }
 
   @Override

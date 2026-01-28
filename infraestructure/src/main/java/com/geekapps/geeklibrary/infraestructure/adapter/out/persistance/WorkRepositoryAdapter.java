@@ -1,5 +1,6 @@
 package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance;
 
+import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
@@ -23,6 +24,12 @@ public class WorkRepositoryAdapter implements WorkRepository {
     final var workEntity = this.workEntityMapper.toEntity(work);
     final var savedEntity = this.workJpaRepository.save(workEntity);
     return this.workEntityMapper.toDomain(savedEntity);
+  }
+
+  @Override
+  public List<Work> query(final String title, final String author) {
+    final var entities = this.workJpaRepository.query(title, author);
+    return entities.stream().map(this.workEntityMapper::toDomain).toList();
   }
 
 }

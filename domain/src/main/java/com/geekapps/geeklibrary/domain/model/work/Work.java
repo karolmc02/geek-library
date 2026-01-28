@@ -65,6 +65,8 @@ public abstract class Work extends AggregateRoot {
     this.illustrator = illustrator;
   }
 
+  public abstract WorkType getType();
+
   @Override
   public int hashCode() {
     final int prime = 31;

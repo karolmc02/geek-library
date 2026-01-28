@@ -17,4 +17,9 @@ public class LightNovel extends Work {
     super(title, description, author, illustrator);
   }
 
+  @Override
+  public WorkType getType() {
+    return WorkType.LIGHT_NOVEL;
+  }
+
 }

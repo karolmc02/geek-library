@@ -1,9 +1,20 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16-alpine'
+    container_name: geek-library-postgres
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=geeklibrary'
+      - 'POSTGRES_USER=geekuser'
+      - 'POSTGRES_PASSWORD=geekpass123'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U geekuser -d geeklibrary"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

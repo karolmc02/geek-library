@@ -17,4 +17,9 @@ public class ArtBook extends Work {
     super(title, description, author, illustrator);
   }
 
+  @Override
+  public WorkType getType() {
+    return WorkType.ARTBOOK;
+  }
+
 }

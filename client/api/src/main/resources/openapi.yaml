@@ -169,6 +169,7 @@ components:
         illustrator:
           $ref: '#/components/schemas/person'
       required:
+        - type
         - title
         - description
         - author

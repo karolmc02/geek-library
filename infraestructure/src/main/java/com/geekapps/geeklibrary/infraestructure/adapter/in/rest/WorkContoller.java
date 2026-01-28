@@ -3,18 +3,33 @@ package com.geekapps.geeklibrary.infraestructure.adapter.in.rest;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.RestController;
 import com.geekapps.geeklibrary.client.api.api.WorksApi;
 import com.geekapps.geeklibrary.client.api.model.QueryWorks200ResponseDTO;
 import com.geekapps.geeklibrary.client.api.model.WorkDTO;
+import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import port.in.CreateWorkUseCase;
 
+@RestController
 public class WorkContoller implements WorksApi {
 
+  private final WorkMapper workMapper;
+
+  private final CreateWorkUseCase createWorkUseCase;
+
+  public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase) {
+    this.workMapper = workMapper;
+    this.createWorkUseCase = createWorkUseCase;
+  }
+
   @Override
-  public ResponseEntity<WorkDTO> createWork(@Valid final WorkDTO work) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'createWork'");
+  public ResponseEntity<WorkDTO> createWork(@Valid final WorkDTO workDTO) {
+    final var createWorkCommand = this.workMapper.toCreateWorkCommand(workDTO);
+    final var createdWork = this.createWorkUseCase.execute(createWorkCommand);
+    final var createdWorkDTO = this.workMapper.toWorkDTO(createdWork);
+    return ResponseEntity.ok().body(createdWorkDTO);
   }
 
   @Override

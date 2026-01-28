@@ -16,4 +16,9 @@ public class Manga extends Work {
       final Person illustrator) {
     super(title, description, author, illustrator);
   }
+
+  @Override
+  public WorkType getType() {
+    return WorkType.MANGA;
+  }
 }

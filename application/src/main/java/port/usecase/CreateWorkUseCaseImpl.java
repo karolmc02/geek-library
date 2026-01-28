@@ -20,7 +20,8 @@ class CreateWorkUseCaseImpl implements CreateWorkUseCase {
 
   @Override
   public Work execute(final CreateWorkCommand input) {
-    return this.workRepository.save(this.createWorkFromCommand(input));
+    final var work = this.createWorkFromCommand(input);
+    return this.workRepository.save(work);
   }
 
   private Work createWorkFromCommand(final CreateWorkCommand command) {

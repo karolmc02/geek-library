@@ -1,0 +1,64 @@
+package port.usecase;
+
+import java.util.UUID;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("DeleteWorkByIdUseCase Tests")
+class DeleteWorkByIdUseCaseImplTest {
+
+  @Mock
+  private WorkRepository workRepository;
+
+  @InjectMocks
+  private DeleteWorkByIdUseCaseImpl deleteWorkByIdUseCase;
+
+  @Test
+  @DisplayName("Should delete work by ID")
+  void shouldDeleteWorkById() {
+    // Given
+    final var workId = UUID.randomUUID();
+
+    // When
+    this.deleteWorkByIdUseCase.execute(workId);
+
+    // Then
+    Mockito.verify(this.workRepository).deleteById(workId);
+  }
+
+  @Test
+  @DisplayName("Should call repository with correct ID")
+  void shouldCallRepositoryWithCorrectId() {
+    // Given
+    final var workId = UUID.randomUUID();
+
+    // When
+    this.deleteWorkByIdUseCase.execute(workId);
+
+    // Then
+    Mockito.verify(this.workRepository).deleteById(workId);
+  }
+
+  @Test
+  @DisplayName("Should handle deletion of different work IDs")
+  void shouldHandleDeletionOfDifferentWorkIds() {
+    // Given
+    final var workId1 = UUID.randomUUID();
+    final var workId2 = UUID.randomUUID();
+
+    // When
+    this.deleteWorkByIdUseCase.execute(workId1);
+    this.deleteWorkByIdUseCase.execute(workId2);
+
+    // Then
+    Mockito.verify(this.workRepository).deleteById(workId1);
+    Mockito.verify(this.workRepository).deleteById(workId2);
+  }
+}

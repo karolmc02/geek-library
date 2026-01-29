@@ -5,12 +5,7 @@ import java.util.UUID;
 import com.geekapps.geeklibrary.domain.annotation.Default;
 import com.geekapps.geeklibrary.domain.model.common.DomainEntity;
 
-/**
- * Represents a specific publication edition of a work.
- * <p>
- * An edition captures the details of how a work is published in a specific country and language,
- * including the publisher, format, and physical characteristics.
- */
+
 public class Edition extends DomainEntity {
 
   private String publisher;
@@ -99,15 +94,16 @@ public class Edition extends DomainEntity {
       return false;
     final Edition edition = (Edition) obj;
     return Objects.equals(this.publisher, edition.publisher)
-        && Objects.equals(this.language, edition.language) && Objects.equals(this.country, edition.country)
-        && Objects.equals(this.isOriginal, edition.isOriginal) && Objects.equals(this.format, edition.format)
-        && this.colorMode == edition.colorMode;
+        && Objects.equals(this.language, edition.language)
+        && Objects.equals(this.country, edition.country)
+        && Objects.equals(this.isOriginal, edition.isOriginal)
+        && Objects.equals(this.format, edition.format) && this.colorMode == edition.colorMode;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), this.publisher, this.language, this.country, this.isOriginal, this.format,
-        this.colorMode);
+    return Objects.hash(super.hashCode(), this.publisher, this.language, this.country,
+        this.isOriginal, this.format, this.colorMode);
   }
 
   @Override

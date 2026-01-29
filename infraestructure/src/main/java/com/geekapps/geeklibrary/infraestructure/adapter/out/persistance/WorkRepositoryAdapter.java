@@ -38,4 +38,9 @@ public class WorkRepositoryAdapter implements WorkRepository {
     return this.workJpaRepository.findById(id).map(this.workEntityMapper::toDomain).orElse(null);
   }
 
+  @Override
+  public void deleteById(final UUID id) {
+    this.workJpaRepository.deleteById(id);
+  }
+
 }

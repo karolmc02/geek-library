@@ -12,4 +12,6 @@ public interface WorkRepository {
 
   Work findById(UUID id);
 
+  void deleteById(UUID id);
+
 }

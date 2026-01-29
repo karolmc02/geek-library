@@ -11,6 +11,7 @@ import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMappe
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import port.in.CreateWorkUseCase;
+import port.in.DeleteWorkByIdUseCase;
 import port.in.GetWorkByIdUseCase;
 import port.in.QueryWorksUseCase;
 import port.in.UpdateWorkUseCase;
@@ -28,14 +29,18 @@ public class WorkContoller implements WorksApi {
 
   private final UpdateWorkUseCase updateWorkUseCase;
 
+  private final DeleteWorkByIdUseCase deleteWorkByIdUseCase;
+
   public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
       final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase,
-      final UpdateWorkUseCase updateWorkUseCase) {
+      final UpdateWorkUseCase updateWorkUseCase,
+      final DeleteWorkByIdUseCase deleteWorkByIdUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
     this.queryWorksUseCase = queryWorksUseCase;
     this.getWorkByIdUseCase = getWorkByIdUseCase;
     this.updateWorkUseCase = updateWorkUseCase;
+    this.deleteWorkByIdUseCase = deleteWorkByIdUseCase;
   }
 
   @Override
@@ -48,8 +53,8 @@ public class WorkContoller implements WorksApi {
 
   @Override
   public ResponseEntity<Void> deleteWorkById(@NotNull final UUID id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'deleteWorkById'");
+    this.deleteWorkByIdUseCase.execute(id);
+    return ResponseEntity.noContent().build();
   }
 
   @Override

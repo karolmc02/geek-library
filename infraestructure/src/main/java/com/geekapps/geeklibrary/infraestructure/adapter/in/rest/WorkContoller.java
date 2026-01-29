@@ -11,6 +11,7 @@ import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMappe
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import port.in.CreateWorkUseCase;
+import port.in.GetWorkByIdUseCase;
 import port.in.QueryWorksUseCase;
 
 @RestController
@@ -22,11 +23,14 @@ public class WorkContoller implements WorksApi {
 
   private final QueryWorksUseCase queryWorksUseCase;
 
+  private final GetWorkByIdUseCase getWorkByIdUseCase;
+
   public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
-      final QueryWorksUseCase queryWorksUseCase) {
+      final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
     this.queryWorksUseCase = queryWorksUseCase;
+    this.getWorkByIdUseCase = getWorkByIdUseCase;
   }
 
   @Override
@@ -45,8 +49,12 @@ public class WorkContoller implements WorksApi {
 
   @Override
   public ResponseEntity<WorkDTO> getWorkById(@NotNull final UUID id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getWorkById'");
+    final var work = this.getWorkByIdUseCase.execute(id);
+    if (work == null) {
+      return ResponseEntity.notFound().build();
+    }
+    final var workDTO = this.workMapper.toWorkDTO(work);
+    return ResponseEntity.ok().body(workDTO);
   }
 
   @Override

@@ -1,31 +1,37 @@
 package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
 import java.util.UUID;
+import com.geekapps.geeklibrary.domain.model.work.WorkType;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "works")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "work_type")
-public abstract class WorkEntity {
+public class WorkEntity {
+
   @Id
   protected UUID id;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "work_type")
+  protected WorkType type;
+
   protected String title;
   protected String description;
+
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "firstName", column = @Column(name = "author_first_name")),
       @AttributeOverride(name = "lastName", column = @Column(name = "author_last_name"))})
   protected PersonEmbeddable author;
+
   @Embedded
   @AttributeOverrides({
       @AttributeOverride(name = "firstName", column = @Column(name = "illustrator_first_name")),
@@ -38,6 +44,14 @@ public abstract class WorkEntity {
 
   public void setId(final UUID id) {
     this.id = id;
+  }
+
+  public WorkType getType() {
+    return this.type;
+  }
+
+  public void setType(final WorkType type) {
+    this.type = type;
   }
 
   public String getTitle() {

@@ -5,7 +5,9 @@ import com.geekapps.geeklibrary.domain.annotation.Default;
 import com.geekapps.geeklibrary.domain.model.common.AggregateRoot;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 
-public abstract class Work extends AggregateRoot {
+public class Work extends AggregateRoot {
+
+  protected WorkType type;
 
   protected String title;
 
@@ -16,21 +18,31 @@ public abstract class Work extends AggregateRoot {
   protected Person illustrator;
 
   @Default
-  public Work(final UUID id, final String title, final String description, final Person author,
-      final Person illustrator) {
+  public Work(final UUID id, final WorkType type, final String title, final String description,
+      final Person author, final Person illustrator) {
     super(id);
+    this.type = type;
     this.title = title;
     this.description = description;
     this.author = author;
     this.illustrator = illustrator;
   }
 
-  public Work(final String title, final String description, final Person author,
-      final Person illustrator) {
+  public Work(final WorkType type, final String title, final String description,
+      final Person author, final Person illustrator) {
+    this.type = type;
     this.title = title;
     this.description = description;
     this.author = author;
     this.illustrator = illustrator;
+  }
+
+  public WorkType getType() {
+    return this.type;
+  }
+
+  public void setType(final WorkType type) {
+    this.type = type;
   }
 
   public String getTitle() {
@@ -65,12 +77,11 @@ public abstract class Work extends AggregateRoot {
     this.illustrator = illustrator;
   }
 
-  public abstract WorkType getType();
-
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
+    result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
     result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.author == null) ? 0 : this.author.hashCode());
@@ -89,6 +100,8 @@ public abstract class Work extends AggregateRoot {
     if (this.getClass() != obj.getClass())
       return false;
     final Work other = (Work) obj;
+    if (this.type != other.type)
+      return false;
     if (this.title == null) {
       if (other.title != null)
         return false;
@@ -114,7 +127,8 @@ public abstract class Work extends AggregateRoot {
 
   @Override
   public String toString() {
-    return "Work [id=" + this.id + ", title=" + this.title + ", description=" + this.description
-        + ", author=" + this.author + ", illustrator=" + this.illustrator + "]";
+    return "Work [id=" + this.id + ", type=" + this.type + ", title=" + this.title
+        + ", description=" + this.description + ", author=" + this.author + ", illustrator="
+        + this.illustrator + "]";
   }
 }

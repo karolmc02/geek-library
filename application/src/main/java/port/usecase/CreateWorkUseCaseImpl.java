@@ -1,9 +1,6 @@
 package port.usecase;
 
 import org.springframework.stereotype.Service;
-import com.geekapps.geeklibrary.domain.model.work.ArtBook;
-import com.geekapps.geeklibrary.domain.model.work.LightNovel;
-import com.geekapps.geeklibrary.domain.model.work.Manga;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
 import port.in.CreateWorkUseCase;
@@ -20,19 +17,9 @@ class CreateWorkUseCaseImpl implements CreateWorkUseCase {
 
   @Override
   public Work execute(final CreateWorkCommand input) {
-    final var work = this.createWorkFromCommand(input);
+    final var work = new Work(input.type(), input.title(), input.description(), input.author(),
+        input.illustrator());
     return this.workRepository.save(work);
-  }
-
-  private Work createWorkFromCommand(final CreateWorkCommand command) {
-    return switch (command.type()) {
-      case MANGA -> new Manga(command.title(), command.description(), command.author(),
-          command.illustrator());
-      case ARTBOOK -> new ArtBook(command.title(), command.description(), command.author(),
-          command.illustrator());
-      case LIGHT_NOVEL -> new LightNovel(command.title(), command.description(), command.author(),
-          command.illustrator());
-    };
   }
 
 }

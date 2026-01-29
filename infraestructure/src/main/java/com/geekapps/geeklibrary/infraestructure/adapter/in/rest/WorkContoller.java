@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import port.in.CreateWorkUseCase;
 import port.in.GetWorkByIdUseCase;
 import port.in.QueryWorksUseCase;
+import port.in.UpdateWorkUseCase;
 
 @RestController
 public class WorkContoller implements WorksApi {
@@ -25,12 +26,16 @@ public class WorkContoller implements WorksApi {
 
   private final GetWorkByIdUseCase getWorkByIdUseCase;
 
+  private final UpdateWorkUseCase updateWorkUseCase;
+
   public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
-      final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase) {
+      final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase,
+      final UpdateWorkUseCase updateWorkUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
     this.queryWorksUseCase = queryWorksUseCase;
     this.getWorkByIdUseCase = getWorkByIdUseCase;
+    this.updateWorkUseCase = updateWorkUseCase;
   }
 
   @Override
@@ -69,8 +74,13 @@ public class WorkContoller implements WorksApi {
 
   @Override
   public ResponseEntity<WorkDTO> updateWorkById(@NotNull final UUID id, @Valid final WorkDTO work) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateWorkById'");
+    final var updateWorkCommand = this.workMapper.toUpdateWorkCommand(id, work);
+    final var updatedWork = this.updateWorkUseCase.execute(updateWorkCommand);
+    if (updatedWork == null) {
+      return ResponseEntity.notFound().build();
+    }
+    final var updatedWorkDTO = this.workMapper.toWorkDTO(updatedWork);
+    return ResponseEntity.ok().body(updatedWorkDTO);
   }
 
 }

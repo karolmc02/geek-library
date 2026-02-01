@@ -14,7 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
+import com.geekapps.geeklibrary.domain.port.out.PersonRepository;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
+import port.in.model.PersonTO;
 import port.in.model.UpdateWorkCommand;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,6 +26,9 @@ class UpdateWorkUseCaseImplTest {
   @Mock
   private WorkRepository workRepository;
 
+  @Mock
+  private PersonRepository personRepository;
+
   @InjectMocks
   private UpdateWorkUseCaseImpl updateWorkUseCase;
 
@@ -31,23 +36,33 @@ class UpdateWorkUseCaseImplTest {
   private UpdateWorkCommand command;
   private Work existingWork;
   private Work updatedWork;
+  private Person oldAuthor;
+  private Person newAuthor;
+  private Person newIllustrator;
 
   @BeforeEach
   void setUp() {
     this.workId = UUID.randomUUID();
 
-    final var oldAuthor = new Person("Old", "Author");
-    final var newAuthor = new Person("New", "Author");
-    final var newIllustrator = new Person("New", "Illustrator");
+    final var oldAuthorId = UUID.randomUUID();
+    final var newAuthorId = UUID.randomUUID();
+    final var newIllustratorId = UUID.randomUUID();
 
-    this.existingWork =
-        new Work(this.workId, WorkType.MANGA, "Old Title", "Old Description", oldAuthor, oldAuthor);
+    this.oldAuthor = new Person(oldAuthorId, "Old", "Author");
+    this.newAuthor = new Person(newAuthorId, "New", "Author");
+    this.newIllustrator = new Person(newIllustratorId, "New", "Illustrator");
+
+    this.existingWork = new Work(this.workId, WorkType.MANGA, "Old Title", "Old Description",
+        this.oldAuthor, this.oldAuthor);
+
+    final var newAuthorCommand = new PersonTO(newAuthorId, "New", "Author");
+    final var newIllustratorCommand = new PersonTO(newIllustratorId, "New", "Illustrator");
 
     this.command = new UpdateWorkCommand(this.workId, WorkType.LIGHT_NOVEL, "Updated Title",
-        "Updated Description", newAuthor, newIllustrator);
+        "Updated Description", newAuthorCommand, newIllustratorCommand);
 
-    this.updatedWork = new Work(this.workId, WorkType.LIGHT_NOVEL, "Updated Title", "Updated Description",
-        newAuthor, newIllustrator);
+    this.updatedWork = new Work(this.workId, WorkType.LIGHT_NOVEL, "Updated Title",
+        "Updated Description", this.newAuthor, this.newIllustrator);
   }
 
   @Test
@@ -55,7 +70,12 @@ class UpdateWorkUseCaseImplTest {
   void shouldUpdateWorkSuccessfullyWhenWorkExists() {
     // Given
     Mockito.when(this.workRepository.findById(this.workId)).thenReturn(this.existingWork);
-    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class))).thenReturn(this.updatedWork);
+    Mockito.when(this.personRepository.findById(this.command.author().id()))
+        .thenReturn(this.newAuthor);
+    Mockito.when(this.personRepository.findById(this.command.illustrator().id()))
+        .thenReturn(this.newIllustrator);
+    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class)))
+        .thenReturn(this.updatedWork);
 
     // When
     final var result = this.updateWorkUseCase.execute(this.command);
@@ -68,6 +88,8 @@ class UpdateWorkUseCaseImplTest {
     Assertions.assertThat(result.getDescription()).isEqualTo("Updated Description");
 
     Mockito.verify(this.workRepository).findById(this.workId);
+    Mockito.verify(this.personRepository).findById(this.command.author().id());
+    Mockito.verify(this.personRepository).findById(this.command.illustrator().id());
     Mockito.verify(this.workRepository).save(ArgumentMatchers.any(Work.class));
   }
 
@@ -90,14 +112,19 @@ class UpdateWorkUseCaseImplTest {
   @DisplayName("Should update work with null illustrator")
   void shouldUpdateWorkWithNullIllustrator() {
     // Given
-    final var commandWithoutIllustrator = new UpdateWorkCommand(this.workId, WorkType.MANGA, "Title",
-        "Description", new Person("Author", "Name"), null);
+    final var authorId = UUID.randomUUID();
+    final var authorCommand = new PersonTO(authorId, "Author", "Name");
+    final var commandWithoutIllustrator = new UpdateWorkCommand(this.workId, WorkType.MANGA,
+        "Title", "Description", authorCommand, null);
 
-    final var updatedWorkWithoutIllustrator = new Work(this.workId, WorkType.MANGA, "Title",
-        "Description", new Person("Author", "Name"), null);
+    final var author = new Person(authorId, "Author", "Name");
+    final var updatedWorkWithoutIllustrator =
+        new Work(this.workId, WorkType.MANGA, "Title", "Description", author, null);
 
     Mockito.when(this.workRepository.findById(this.workId)).thenReturn(this.existingWork);
-    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class))).thenReturn(updatedWorkWithoutIllustrator);
+    Mockito.when(this.personRepository.findById(authorId)).thenReturn(author);
+    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class)))
+        .thenReturn(updatedWorkWithoutIllustrator);
 
     // When
     final var result = this.updateWorkUseCase.execute(commandWithoutIllustrator);
@@ -113,7 +140,12 @@ class UpdateWorkUseCaseImplTest {
   void shouldPreserveWorkIdWhenUpdating() {
     // Given
     Mockito.when(this.workRepository.findById(this.workId)).thenReturn(this.existingWork);
-    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class))).thenReturn(this.updatedWork);
+    Mockito.when(this.personRepository.findById(this.command.author().id()))
+        .thenReturn(this.newAuthor);
+    Mockito.when(this.personRepository.findById(this.command.illustrator().id()))
+        .thenReturn(this.newIllustrator);
+    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class)))
+        .thenReturn(this.updatedWork);
 
     // When
     final var result = this.updateWorkUseCase.execute(this.command);
@@ -122,5 +154,35 @@ class UpdateWorkUseCaseImplTest {
     Assertions.assertThat(result).isNotNull();
     Assertions.assertThat(result.getId()).isEqualTo(this.workId);
     Assertions.assertThat(result.getId()).isEqualTo(this.existingWork.getId());
+  }
+
+  @Test
+  @DisplayName("Should create new person if not found by id")
+  void shouldCreateNewPersonIfNotFoundById() {
+    // Given
+    final var newPersonId = UUID.randomUUID();
+    final var personCommand = new PersonTO(newPersonId, "New", "Person");
+    final var commandWithNewPerson = new UpdateWorkCommand(this.workId, WorkType.MANGA, "Title",
+        "Description", personCommand, null);
+
+    final var newPerson = new Person(newPersonId, "New", "Person");
+    final var updatedWorkWithNewPerson =
+        new Work(this.workId, WorkType.MANGA, "Title", "Description", newPerson, null);
+
+    Mockito.when(this.workRepository.findById(this.workId)).thenReturn(this.existingWork);
+    Mockito.when(this.personRepository.findById(newPersonId)).thenReturn(null);
+    Mockito.when(this.personRepository.save(ArgumentMatchers.any(Person.class)))
+        .thenReturn(newPerson);
+    Mockito.when(this.workRepository.save(ArgumentMatchers.any(Work.class)))
+        .thenReturn(updatedWorkWithNewPerson);
+
+    // When
+    final var result = this.updateWorkUseCase.execute(commandWithNewPerson);
+
+    // Then
+    Assertions.assertThat(result).isNotNull();
+    Mockito.verify(this.personRepository).findById(newPersonId);
+    Mockito.verify(this.personRepository).save(ArgumentMatchers.any(Person.class));
+    Mockito.verify(this.workRepository).save(ArgumentMatchers.any(Work.class));
   }
 }

@@ -1,23 +1,26 @@
-package com.geekapps.geeklibrary.domain.model.common;
+package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
 import java.util.UUID;
-import com.geekapps.geeklibrary.domain.annotation.Default;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-public class Person extends DomainEntity {
+@Entity
+@Table(name = "persons")
+public class PersonEntity {
 
-  private String firstName;
-  private String lastName;
+  @Id
+  protected UUID id;
 
-  @Default
-  public Person(final UUID id, final String firstName, final String lastName) {
-    super(id);
-    this.firstName = firstName;
-    this.lastName = lastName;
+  protected String firstName;
+  protected String lastName;
+
+  public UUID getId() {
+    return this.id;
   }
 
-  public Person(final String firstName, final String lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+  public void setId(final UUID id) {
+    this.id = id;
   }
 
   public String getFirstName() {
@@ -39,7 +42,8 @@ public class Person extends DomainEntity {
   @Override
   public int hashCode() {
     final int prime = 31;
-    int result = super.hashCode();
+    int result = 1;
+    result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
     result = prime * result + ((this.firstName == null) ? 0 : this.firstName.hashCode());
     result = prime * result + ((this.lastName == null) ? 0 : this.lastName.hashCode());
     return result;
@@ -49,11 +53,16 @@ public class Person extends DomainEntity {
   public boolean equals(final Object obj) {
     if (this == obj)
       return true;
-    if (!super.equals(obj))
+    if (obj == null)
       return false;
     if (this.getClass() != obj.getClass())
       return false;
-    final Person other = (Person) obj;
+    final PersonEntity other = (PersonEntity) obj;
+    if (this.id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!this.id.equals(other.id))
+      return false;
     if (this.firstName == null) {
       if (other.firstName != null)
         return false;
@@ -69,8 +78,8 @@ public class Person extends DomainEntity {
 
   @Override
   public String toString() {
-    return "Person [id=" + this.id + ", firstName=" + this.firstName + ", lastName=" + this.lastName
-        + "]";
+    return "PersonEntity [id=" + this.id + ", firstName=" + this.firstName + ", lastName="
+        + this.lastName + "]";
   }
 
 }

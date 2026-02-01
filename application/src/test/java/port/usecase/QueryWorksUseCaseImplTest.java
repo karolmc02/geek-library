@@ -69,7 +69,7 @@ class QueryWorksUseCaseImplTest {
     // Then
     Assertions.assertThat(result).isNotNull();
     Assertions.assertThat(result).hasSize(1);
-    Assertions.assertThat(result.get(0).getAuthor().lastName()).contains("Oda");
+    Assertions.assertThat(result.get(0).getAuthor().getLastName()).contains("Oda");
 
     Mockito.verify(this.workRepository).query(null, author);
   }
@@ -94,7 +94,7 @@ class QueryWorksUseCaseImplTest {
     Assertions.assertThat(result).isNotNull();
     Assertions.assertThat(result).hasSize(1);
     Assertions.assertThat(result.get(0).getTitle()).isEqualTo("Naruto");
-    Assertions.assertThat(result.get(0).getAuthor().lastName()).contains("Kishimoto");
+    Assertions.assertThat(result.get(0).getAuthor().getLastName()).contains("Kishimoto");
 
     Mockito.verify(this.workRepository).query(title, author);
   }
@@ -127,7 +127,8 @@ class QueryWorksUseCaseImplTest {
   void shouldReturnEmptyListWhenNoWorksFound() {
     // Given
     final var command = new QueryWorksCommand("NonExistent", "Unknown");
-    Mockito.when(this.workRepository.query("NonExistent", "Unknown")).thenReturn(Collections.emptyList());
+    Mockito.when(this.workRepository.query("NonExistent", "Unknown"))
+        .thenReturn(Collections.emptyList());
 
     // When
     final var result = this.queryWorksUseCase.execute(command);
@@ -152,7 +153,8 @@ class QueryWorksUseCaseImplTest {
     final var work3 = new Work(UUID.randomUUID(), WorkType.MANGA, "Bleach", "Desc",
         new Person("Tite", "Kubo"), new Person("Tite", "Kubo"));
 
-    Mockito.when(this.workRepository.query("Manga", null)).thenReturn(Arrays.asList(work1, work2, work3));
+    Mockito.when(this.workRepository.query("Manga", null))
+        .thenReturn(Arrays.asList(work1, work2, work3));
 
     // When
     final var result = this.queryWorksUseCase.execute(command);

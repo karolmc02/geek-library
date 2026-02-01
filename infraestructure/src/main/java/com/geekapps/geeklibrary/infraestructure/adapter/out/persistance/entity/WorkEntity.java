@@ -2,14 +2,12 @@ package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,23 +18,18 @@ public class WorkEntity {
   protected UUID id;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "work_type")
   protected WorkType type;
 
   protected String title;
   protected String description;
 
-  @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "firstName", column = @Column(name = "author_first_name")),
-      @AttributeOverride(name = "lastName", column = @Column(name = "author_last_name"))})
-  protected PersonEmbeddable author;
+  @ManyToOne
+  @JoinColumn(name = "author_id")
+  protected PersonEntity author;
 
-  @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "firstName", column = @Column(name = "illustrator_first_name")),
-      @AttributeOverride(name = "lastName", column = @Column(name = "illustrator_last_name"))})
-  protected PersonEmbeddable illustrator;
+  @ManyToOne
+  @JoinColumn(name = "illustrator_id")
+  protected PersonEntity illustrator;
 
   public UUID getId() {
     return this.id;
@@ -70,19 +63,19 @@ public class WorkEntity {
     this.description = description;
   }
 
-  public PersonEmbeddable getAuthor() {
+  public PersonEntity getAuthor() {
     return this.author;
   }
 
-  public void setAuthor(final PersonEmbeddable author) {
+  public void setAuthor(final PersonEntity author) {
     this.author = author;
   }
 
-  public PersonEmbeddable getIllustrator() {
+  public PersonEntity getIllustrator() {
     return this.illustrator;
   }
 
-  public void setIllustrator(final PersonEmbeddable illustrator) {
+  public void setIllustrator(final PersonEntity illustrator) {
     this.illustrator = illustrator;
   }
 

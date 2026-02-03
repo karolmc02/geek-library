@@ -2,6 +2,7 @@ package port.usecase;
 
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
 import port.in.GetWorkByIdUseCase;
@@ -17,7 +18,11 @@ public class GetWorkByIdUseCaseImpl implements GetWorkByIdUseCase {
 
   @Override
   public Work execute(final UUID id) {
-    return this.workRepository.findById(id);
+    final var work = this.workRepository.findById(id);
+    if (work == null) {
+      throw new EntityNotFoundException("Work", id);
+    }
+    return work;
   }
 
 }

@@ -46,8 +46,16 @@ paths:
                       $ref: '#/components/schemas/work'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
     post:
       summary: Create a new work
       operationId: createWork
@@ -70,8 +78,16 @@ paths:
                 $ref: '#/components/schemas/work'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
   /works/{id}:
     get:
       summary: Get work by ID
@@ -90,8 +106,16 @@ paths:
                 $ref: '#/components/schemas/work'
         '404':
           description: Work not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
     put:
       summary: Update work by ID
       operationId: updateWorkById
@@ -116,10 +140,22 @@ paths:
                 $ref: '#/components/schemas/work'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '404':
           description: Work not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
     delete:
       summary: Delete work by ID
       operationId: deleteWorkById
@@ -133,8 +169,16 @@ paths:
           description: Work deleted successfully
         '404':
           description: Work not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
         '500':
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 components:
   parameters:
     workId:
@@ -183,3 +227,31 @@ components:
           type: string
         lastName:
           type: string
+    error:
+      type: object
+      description: RFC 7807 Problem Details for HTTP APIs
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that identifies the problem type
+          example: about:blank
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+          example: Not Found
+        status:
+          type: integer
+          description: The HTTP status code
+          example: 404
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem
+          example: Work with id 123e4567-e89b-12d3-a456-426614174000 not found
+        instance:
+          type: string
+          format: uri
+          description: A URI reference that identifies the specific occurrence of the problem
+          example: http://localhost:8080/api/works/123e4567-e89b-12d3-a456-426614174000
+      required:
+        - status

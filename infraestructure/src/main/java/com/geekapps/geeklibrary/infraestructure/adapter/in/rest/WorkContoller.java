@@ -60,9 +60,6 @@ public class WorkContoller implements WorksApi {
   @Override
   public ResponseEntity<WorkDTO> getWorkById(@NotNull final UUID id) {
     final var work = this.getWorkByIdUseCase.execute(id);
-    if (work == null) {
-      return ResponseEntity.notFound().build();
-    }
     final var workDTO = this.workMapper.toWorkDTO(work);
     return ResponseEntity.ok().body(workDTO);
   }

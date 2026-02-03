@@ -27,6 +27,7 @@ import port.in.GetWorkByIdUseCase;
 import port.in.QueryWorksUseCase;
 import port.in.UpdateWorkUseCase;
 import port.in.model.CreateWorkCommand;
+import port.in.model.PersonTO;
 import port.in.model.QueryWorksCommand;
 import port.in.model.UpdateWorkCommand;
 
@@ -68,15 +69,17 @@ class WorkContollerTest {
         .description("A pirate adventure").author(personDTO).illustrator(personDTO);
 
     final var person = new Person("Eiichiro", "Oda");
-    this.work = new Work(this.workId, WorkType.MANGA, "One Piece", "A pirate adventure", person, person);
+    this.work =
+        new Work(this.workId, WorkType.MANGA, "One Piece", "A pirate adventure", person, person);
   }
 
   @Test
   @DisplayName("Should create work successfully")
   void shouldCreateWorkSuccessfully() {
     // Given
+    final var personTO = new PersonTO(null, "Eiichiro", "Oda");
     final var createCommand = new CreateWorkCommand(WorkType.MANGA, "One Piece",
-        "A pirate adventure", new Person("Eiichiro", "Oda"), new Person("Eiichiro", "Oda"));
+        "A pirate adventure", personTO, personTO);
 
     Mockito.when(this.workMapper.toCreateWorkCommand(this.workDTO)).thenReturn(createCommand);
     Mockito.when(this.createWorkUseCase.execute(createCommand)).thenReturn(this.work);
@@ -134,10 +137,12 @@ class WorkContollerTest {
   @DisplayName("Should update work successfully")
   void shouldUpdateWorkSuccessfully() {
     // Given
+    final var personTO = new PersonTO(null, "Eiichiro", "Oda");
     final var updateCommand = new UpdateWorkCommand(this.workId, WorkType.MANGA, "One Piece",
-        "A pirate adventure", new Person("Eiichiro", "Oda"), new Person("Eiichiro", "Oda"));
+        "A pirate adventure", personTO, personTO);
 
-    Mockito.when(this.workMapper.toUpdateWorkCommand(this.workId, this.workDTO)).thenReturn(updateCommand);
+    Mockito.when(this.workMapper.toUpdateWorkCommand(this.workId, this.workDTO))
+        .thenReturn(updateCommand);
     Mockito.when(this.updateWorkUseCase.execute(updateCommand)).thenReturn(this.work);
     Mockito.when(this.workMapper.toWorkDTO(this.work)).thenReturn(this.workDTO);
 
@@ -158,10 +163,12 @@ class WorkContollerTest {
   @DisplayName("Should return 404 when updating non-existent work")
   void shouldReturn404WhenUpdatingNonExistentWork() {
     // Given
+    final var personTO = new PersonTO(null, "Eiichiro", "Oda");
     final var updateCommand = new UpdateWorkCommand(this.workId, WorkType.MANGA, "One Piece",
-        "A pirate adventure", new Person("Eiichiro", "Oda"), new Person("Eiichiro", "Oda"));
+        "A pirate adventure", personTO, personTO);
 
-    Mockito.when(this.workMapper.toUpdateWorkCommand(this.workId, this.workDTO)).thenReturn(updateCommand);
+    Mockito.when(this.workMapper.toUpdateWorkCommand(this.workId, this.workDTO))
+        .thenReturn(updateCommand);
     Mockito.when(this.updateWorkUseCase.execute(updateCommand)).thenReturn(null);
 
     // When
@@ -301,7 +308,8 @@ class WorkContollerTest {
 
     Mockito.when(this.workMapper.toQueryWorksCommand(null, null)).thenReturn(queryCommand);
     Mockito.when(this.queryWorksUseCase.execute(queryCommand)).thenReturn(works);
-    Mockito.when(this.workMapper.toWorkDTOList(works)).thenReturn(Arrays.asList(this.workDTO, workDTO2));
+    Mockito.when(this.workMapper.toWorkDTOList(works))
+        .thenReturn(Arrays.asList(this.workDTO, workDTO2));
 
     // When
     final var response = this.workController.queryWorks(null, null);

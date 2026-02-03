@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
-import com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity.PersonEmbeddable;
+import com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity.PersonEntity;
 import com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity.WorkEntity;
 import com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.mapper.WorkEntityMapper;
 
@@ -43,7 +43,8 @@ class WorkRepositoryAdapterTest {
     this.workId = UUID.randomUUID();
 
     final var person = new Person("Eiichiro", "Oda");
-    this.work = new Work(this.workId, WorkType.MANGA, "One Piece", "A pirate adventure", person, person);
+    this.work =
+        new Work(this.workId, WorkType.MANGA, "One Piece", "A pirate adventure", person, person);
 
     this.workEntity = new WorkEntity();
     this.workEntity.setId(this.workId);
@@ -51,11 +52,12 @@ class WorkRepositoryAdapterTest {
     this.workEntity.setTitle("One Piece");
     this.workEntity.setDescription("A pirate adventure");
 
-    final var personEmbeddable = new PersonEmbeddable();
-    personEmbeddable.setFirstName("Eiichiro");
-    personEmbeddable.setLastName("Oda");
-    this.workEntity.setAuthor(personEmbeddable);
-    this.workEntity.setIllustrator(personEmbeddable);
+    final var personEntity = new PersonEntity();
+    personEntity.setId(UUID.randomUUID());
+    personEntity.setFirstName("Eiichiro");
+    personEntity.setLastName("Oda");
+    this.workEntity.setAuthor(personEntity);
+    this.workEntity.setIllustrator(personEntity);
   }
 
   @Test
@@ -83,7 +85,8 @@ class WorkRepositoryAdapterTest {
   @DisplayName("Should find work by ID when it exists")
   void shouldFindWorkByIdWhenItExists() {
     // Given
-    Mockito.when(this.workJpaRepository.findById(this.workId)).thenReturn(Optional.of(this.workEntity));
+    Mockito.when(this.workJpaRepository.findById(this.workId))
+        .thenReturn(Optional.of(this.workEntity));
     Mockito.when(this.workEntityMapper.toDomain(this.workEntity)).thenReturn(this.work);
 
     // When
@@ -192,7 +195,8 @@ class WorkRepositoryAdapterTest {
   @DisplayName("Should return empty list when no works found in query")
   void shouldReturnEmptyListWhenNoWorksFoundInQuery() {
     // Given
-    Mockito.when(this.workJpaRepository.query(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(List.of());
+    Mockito.when(this.workJpaRepository.query(ArgumentMatchers.any(), ArgumentMatchers.any()))
+        .thenReturn(List.of());
 
     // When
     final var result = this.workRepositoryAdapter.query("Unknown", "Unknown");

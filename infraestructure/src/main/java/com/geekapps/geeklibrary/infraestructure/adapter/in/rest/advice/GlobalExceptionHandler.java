@@ -21,4 +21,14 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
   }
 
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<ErrorDTO> handleRuntimeException(final RuntimeException ex,
+      final WebRequest request) {
+    final var errorResponse =
+        new ErrorDTO().type(URI.create("about:blank")).title("Internal Server Error")
+            .status(HttpStatus.INTERNAL_SERVER_ERROR.value()).detail(ex.getMessage())
+            .instance(URI.create(request.getDescription(false).replace("uri=", "")));
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+  }
+
 }

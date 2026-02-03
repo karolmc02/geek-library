@@ -1,18 +1,12 @@
 package com.geekapps.geeklibrary.domain.model.edition;
 
+import com.geekapps.geeklibrary.domain.validation.DomainValidator;
+
 public record Country(String name, String isoCode) {
 
   public Country {
-    if (name == null || name.isBlank()) {
-      throw new IllegalArgumentException("Country name cannot be null or empty");
-    }
-    if (isoCode == null || isoCode.isBlank()) {
-      throw new IllegalArgumentException("ISO code cannot be null or empty");
-    }
-    if (!isoCode.matches("^[A-Z]{2}$")) {
-      throw new IllegalArgumentException(
-          "ISO code must follow ISO 3166-1 alpha-2 format (e.g., 'US', 'ES', 'JP')");
-    }
+    DomainValidator.validateNotNullOrEmpty(name, "Country name");
+    DomainValidator.validateCountryIsoCode(isoCode);
   }
 
   @Override

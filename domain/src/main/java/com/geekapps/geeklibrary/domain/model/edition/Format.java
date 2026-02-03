@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.annotation.Default;
 import com.geekapps.geeklibrary.domain.model.common.DomainEntity;
+import com.geekapps.geeklibrary.domain.validation.DomainValidator;
 
 public class Format extends DomainEntity {
 
@@ -33,12 +34,8 @@ public class Format extends DomainEntity {
   }
 
   private void validateDimensions(final Double width, final Double height) {
-    if (width != null && width <= 0) {
-      throw new IllegalArgumentException("Width must be positive");
-    }
-    if (height != null && height <= 0) {
-      throw new IllegalArgumentException("Height must be positive");
-    }
+    DomainValidator.validatePositiveDimension(width, "Width");
+    DomainValidator.validatePositiveDimension(height, "Height");
   }
 
   public String getName() {
@@ -62,9 +59,7 @@ public class Format extends DomainEntity {
   }
 
   public void setWidthCm(final Double widthCm) {
-    if (widthCm != null && widthCm <= 0) {
-      throw new IllegalArgumentException("Width must be positive");
-    }
+    DomainValidator.validatePositiveDimension(widthCm, "Width");
     this.widthCm = widthCm;
   }
 
@@ -73,9 +68,7 @@ public class Format extends DomainEntity {
   }
 
   public void setHeightCm(final Double heightCm) {
-    if (heightCm != null && heightCm <= 0) {
-      throw new IllegalArgumentException("Height must be positive");
-    }
+    DomainValidator.validatePositiveDimension(heightCm, "Height");
     this.heightCm = heightCm;
   }
 

@@ -1,6 +1,7 @@
 package port.usecase;
 
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.PersonRepository;
@@ -25,7 +26,7 @@ public class UpdateWorkUseCaseImpl implements UpdateWorkUseCase {
   public Work execute(final UpdateWorkCommand input) {
     final var existingWork = this.workRepository.findById(input.id());
     if (existingWork == null) {
-      return null;
+      throw new EntityNotFoundException("Work", input.id());
     }
 
     final var author = this.findOrCreatePerson(input.author());

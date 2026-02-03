@@ -78,9 +78,6 @@ public class WorkContoller implements WorksApi {
   public ResponseEntity<WorkDTO> updateWorkById(@NotNull final UUID id, @Valid final WorkDTO work) {
     final var updateWorkCommand = this.workMapper.toUpdateWorkCommand(id, work);
     final var updatedWork = this.updateWorkUseCase.execute(updateWorkCommand);
-    if (updatedWork == null) {
-      return ResponseEntity.notFound().build();
-    }
     final var updatedWorkDTO = this.workMapper.toWorkDTO(updatedWork);
     return ResponseEntity.ok().body(updatedWorkDTO);
   }

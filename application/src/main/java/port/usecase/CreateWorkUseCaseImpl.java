@@ -36,20 +36,8 @@ class CreateWorkUseCaseImpl implements CreateWorkUseCase {
     if (personCommand == null) {
       return null;
     }
-
-    // Try to find by ID if provided
-    if (personCommand.id() != null) {
-      final var existingPerson = this.personRepository.findById(personCommand.id());
-      if (existingPerson != null) {
-        return existingPerson;
-      }
-    }
-
-    // Create new person with provided data
-    final var newPerson = personCommand.id() != null
-        ? new Person(personCommand.id(), personCommand.firstName(), personCommand.lastName())
-        : new Person(personCommand.firstName(), personCommand.lastName());
-    return this.personRepository.save(newPerson);
+    return this.personRepository.findOrCreate(personCommand.id(), personCommand.firstName(),
+        personCommand.lastName());
   }
 
 }

@@ -9,4 +9,6 @@ public interface PersonRepository {
 
   Person save(Person person);
 
+  Person findOrCreate(UUID id, String firstName, String lastName);
+
 }

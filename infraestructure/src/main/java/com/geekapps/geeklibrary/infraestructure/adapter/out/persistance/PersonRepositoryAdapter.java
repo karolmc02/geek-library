@@ -32,4 +32,21 @@ public class PersonRepositoryAdapter implements PersonRepository {
     return this.personEntityMapper.toDomain(savedEntity);
   }
 
+  @Override
+  public Person findOrCreate(final UUID id, final String firstName, final String lastName) {
+    if (id == null && firstName == null && lastName == null) {
+      return null;
+    }
+
+    if (id != null) {
+      final var existingPerson = this.findById(id);
+      if (existingPerson != null) {
+        return existingPerson;
+      }
+    }
+
+    final var newPerson = new Person(firstName, lastName);
+    return this.save(newPerson);
+  }
+
 }

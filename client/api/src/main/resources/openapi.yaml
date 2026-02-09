@@ -11,6 +11,8 @@ servers:
 tags:
   - name: works
     description: Operations related to works in the Geek Library
+  - name: editions
+    description: Operations related to editions of works
 paths:
   /works:
     get:
@@ -88,7 +90,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-  /works/{id}:
+  /works/{workId}:
     get:
       summary: Get work by ID
       operationId: getWorkById
@@ -179,12 +181,187 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+  /works/{workId}/editions:
+    get:
+      summary: Get all editions for a work
+      operationId: getEditionsByWorkId
+      description: Retrieve all editions of a specific work from the Geek Library.
+      tags:
+        - editions
+      parameters:
+        - $ref: '#/components/parameters/workId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  editions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/edition'
+        '404':
+          description: Work not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: Create a new edition for a work
+      operationId: createEdition
+      description: Create a new edition for a specific work in the Geek Library.
+      tags:
+        - editions
+      parameters:
+        - $ref: '#/components/parameters/workId'
+      requestBody:
+        description: Edition object to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edition'
+      responses:
+        '201':
+          description: Edition created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edition'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Work not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /works/{workId}/editions/{editionId}:
+    get:
+      summary: Get edition by ID
+      operationId: getEditionById
+      description: Retrieve a specific edition by its ID for a given work.
+      tags:
+        - editions
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edition'
+        '404':
+          description: Work or Edition not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      summary: Update edition by ID
+      operationId: updateEditionById
+      description: Update a specific edition by its ID for a given work.
+      tags:
+        - editions
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+      requestBody:
+        description: Edition object with updated information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edition'
+      responses:
+        '200':
+          description: Edition updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edition'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Work or Edition not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: Delete edition by ID
+      operationId: deleteEditionById
+      description: Delete a specific edition by its ID from a work.
+      tags:
+        - editions
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+      responses:
+        '204':
+          description: Edition deleted successfully
+        '404':
+          description: Work or Edition not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 components:
   parameters:
     workId:
-      name: id
+      name: workId
       in: path
       description: ID of the work
+      required: true
+      schema:
+        type: string
+        format: uuid
+    editionId:
+      name: editionId
+      in: path
+      description: ID of the edition
       required: true
       schema:
         type: string
@@ -196,6 +373,92 @@ components:
         - MANGA
         - ARTBOOK
         - LIGHT_NOVEL
+    colorMode:
+      type: string
+      enum:
+        - BLACK_AND_WHITE
+        - FULL_COLOR
+        - PARTIAL_COLOR
+    language:
+      type: object
+      properties:
+        isoCode:
+          type: string
+          description: ISO 639 language code
+          example: en
+      required:
+        - isoCode
+    country:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Country name
+          example: United States
+        isoCode:
+          type: string
+          description: ISO 3166 country code
+          example: US
+      required:
+        - name
+        - isoCode
+    format:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Format name
+          example: Tankobon
+        description:
+          type: string
+          description: Format description
+          example: Standard Japanese manga format
+        widthCm:
+          type: number
+          format: double
+          description: Width in centimeters
+          example: 11.5
+        heightCm:
+          type: number
+          format: double
+          description: Height in centimeters
+          example: 17.5
+      required:
+        - name
+        - widthCm
+        - heightCm
+    edition:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        publisher:
+          type: string
+          description: Publisher name
+          example: Viz Media
+        language:
+          $ref: '#/components/schemas/language'
+        country:
+          $ref: '#/components/schemas/country'
+        isOriginal:
+          type: boolean
+          description: Whether this is the original edition
+          example: false
+        format:
+          $ref: '#/components/schemas/format'
+        colorMode:
+          $ref: '#/components/schemas/colorMode'
+      required:
+        - publisher
+        - language
+        - country
+        - isOriginal
+        - format
+        - colorMode
     work:
       type: object
       properties:

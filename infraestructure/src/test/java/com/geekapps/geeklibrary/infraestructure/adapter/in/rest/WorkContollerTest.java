@@ -21,15 +21,15 @@ import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
 import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMapper;
-import port.in.CreateWorkUseCase;
-import port.in.DeleteWorkByIdUseCase;
-import port.in.GetWorkByIdUseCase;
-import port.in.QueryWorksUseCase;
-import port.in.UpdateWorkUseCase;
-import port.in.model.CreateWorkCommand;
-import port.in.model.PersonTO;
-import port.in.model.QueryWorksCommand;
-import port.in.model.UpdateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.CreateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.DeleteWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.GetWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.QueryWorksUseCase;
+import com.geekapps.geeklibrary.application.port.in.UpdateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.model.PersonTO;
+import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
+import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("WorkController Tests")

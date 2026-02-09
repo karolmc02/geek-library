@@ -1,9 +1,9 @@
-package port.usecase;
+package com.geekapps.geeklibrary.application.usecase;
 
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.application.port.in.DeleteWorkByIdUseCase;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
-import port.in.DeleteWorkByIdUseCase;
 
 @Service
 public class DeleteWorkByIdUseCaseImpl implements DeleteWorkByIdUseCase {

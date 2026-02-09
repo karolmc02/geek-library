@@ -1,4 +1,4 @@
-package port.usecase;
+package com.geekapps.geeklibrary.application.usecase;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,11 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
-import port.in.model.QueryWorksCommand;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("QueryWorksUseCase Tests")

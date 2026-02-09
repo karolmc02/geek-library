@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.mapstruct.Mapper;
 import com.geekapps.geeklibrary.client.api.model.WorkDTO;
 import com.geekapps.geeklibrary.domain.model.work.Work;
-import port.in.model.CreateWorkCommand;
-import port.in.model.QueryWorksCommand;
-import port.in.model.UpdateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
+import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
 
 @Mapper
 public interface WorkMapper {

@@ -10,11 +10,11 @@ import com.geekapps.geeklibrary.client.api.model.WorkDTO;
 import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMapper;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import port.in.CreateWorkUseCase;
-import port.in.DeleteWorkByIdUseCase;
-import port.in.GetWorkByIdUseCase;
-import port.in.QueryWorksUseCase;
-import port.in.UpdateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.CreateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.DeleteWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.GetWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.QueryWorksUseCase;
+import com.geekapps.geeklibrary.application.port.in.UpdateWorkUseCase;
 
 @RestController
 public class WorkContoller implements WorksApi {

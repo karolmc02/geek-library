@@ -1,14 +1,14 @@
-package port.usecase;
+package com.geekapps.geeklibrary.application.usecase;
 
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.application.port.in.UpdateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.model.PersonTO;
+import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
 import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.PersonRepository;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
-import port.in.UpdateWorkUseCase;
-import port.in.model.PersonTO;
-import port.in.model.UpdateWorkCommand;
 
 @Service
 public class UpdateWorkUseCaseImpl implements UpdateWorkUseCase {

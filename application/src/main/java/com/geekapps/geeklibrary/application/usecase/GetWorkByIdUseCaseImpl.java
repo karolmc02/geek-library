@@ -1,11 +1,11 @@
-package port.usecase;
+package com.geekapps.geeklibrary.application.usecase;
 
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.application.port.in.GetWorkByIdUseCase;
 import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
-import port.in.GetWorkByIdUseCase;
 
 @Service
 public class GetWorkByIdUseCaseImpl implements GetWorkByIdUseCase {

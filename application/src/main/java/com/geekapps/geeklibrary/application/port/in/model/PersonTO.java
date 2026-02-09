@@ -1,4 +1,4 @@
-package port.in.model;
+package com.geekapps.geeklibrary.application.port.in.model;
 
 import java.util.UUID;
 

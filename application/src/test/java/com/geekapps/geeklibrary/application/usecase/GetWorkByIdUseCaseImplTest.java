@@ -1,15 +1,13 @@
-package port.usecase;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+package com.geekapps.geeklibrary.application.usecase;
 
 import java.util.UUID;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
@@ -35,18 +33,18 @@ class GetWorkByIdUseCaseImplTest {
     final var work =
         new Work(workId, WorkType.MANGA, "One Piece", "A pirate adventure", author, author);
 
-    when(workRepository.findById(workId)).thenReturn(work);
+    Mockito.when(this.workRepository.findById(workId)).thenReturn(work);
 
     // When
-    final var result = getWorkByIdUseCase.execute(workId);
+    final var result = this.getWorkByIdUseCase.execute(workId);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result.getId()).isEqualTo(workId);
-    assertThat(result.getTitle()).isEqualTo("One Piece");
-    assertThat(result.getType()).isEqualTo(WorkType.MANGA);
+    Assertions.assertThat(result).isNotNull();
+    Assertions.assertThat(result.getId()).isEqualTo(workId);
+    Assertions.assertThat(result.getTitle()).isEqualTo("One Piece");
+    Assertions.assertThat(result.getType()).isEqualTo(WorkType.MANGA);
 
-    verify(workRepository).findById(workId);
+    Mockito.verify(this.workRepository).findById(workId);
   }
 
   @Test
@@ -54,14 +52,14 @@ class GetWorkByIdUseCaseImplTest {
   void shouldReturnNullWhenWorkDoesNotExist() {
     // Given
     final var workId = UUID.randomUUID();
-    when(workRepository.findById(workId)).thenReturn(null);
+    Mockito.when(this.workRepository.findById(workId)).thenReturn(null);
 
     // When
-    final var result = getWorkByIdUseCase.execute(workId);
+    final var result = this.getWorkByIdUseCase.execute(workId);
 
     // Then
-    assertThat(result).isNull();
-    verify(workRepository).findById(workId);
+    Assertions.assertThat(result).isNull();
+    Mockito.verify(this.workRepository).findById(workId);
   }
 
   @Test
@@ -69,13 +67,13 @@ class GetWorkByIdUseCaseImplTest {
   void shouldCallRepositoryWithCorrectId() {
     // Given
     final var workId = UUID.randomUUID();
-    when(workRepository.findById(workId)).thenReturn(null);
+    Mockito.when(this.workRepository.findById(workId)).thenReturn(null);
 
     // When
-    getWorkByIdUseCase.execute(workId);
+    this.getWorkByIdUseCase.execute(workId);
 
     // Then
-    verify(workRepository).findById(workId);
+    Mockito.verify(this.workRepository).findById(workId);
   }
 
   @Test
@@ -87,18 +85,18 @@ class GetWorkByIdUseCaseImplTest {
     final var illustrator = new Person("Masashi", "Kishimoto");
     final var work = new Work(workId, WorkType.MANGA, "Naruto", "Ninja story", author, illustrator);
 
-    when(workRepository.findById(workId)).thenReturn(work);
+    Mockito.when(this.workRepository.findById(workId)).thenReturn(work);
 
     // When
-    final var result = getWorkByIdUseCase.execute(workId);
+    final var result = this.getWorkByIdUseCase.execute(workId);
 
     // Then
-    assertThat(result).isNotNull();
-    assertThat(result.getId()).isEqualTo(workId);
-    assertThat(result.getType()).isEqualTo(WorkType.MANGA);
-    assertThat(result.getTitle()).isEqualTo("Naruto");
-    assertThat(result.getDescription()).isEqualTo("Ninja story");
-    assertThat(result.getAuthor()).isEqualTo(author);
-    assertThat(result.getIllustrator()).isEqualTo(illustrator);
+    Assertions.assertThat(result).isNotNull();
+    Assertions.assertThat(result.getId()).isEqualTo(workId);
+    Assertions.assertThat(result.getType()).isEqualTo(WorkType.MANGA);
+    Assertions.assertThat(result.getTitle()).isEqualTo("Naruto");
+    Assertions.assertThat(result.getDescription()).isEqualTo("Ninja story");
+    Assertions.assertThat(result.getAuthor()).isEqualTo(author);
+    Assertions.assertThat(result.getIllustrator()).isEqualTo(illustrator);
   }
 }

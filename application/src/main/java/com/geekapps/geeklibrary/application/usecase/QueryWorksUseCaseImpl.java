@@ -1,11 +1,11 @@
-package port.usecase;
+package com.geekapps.geeklibrary.application.usecase;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import com.geekapps.geeklibrary.application.port.in.QueryWorksUseCase;
+import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
-import port.in.QueryWorksUseCase;
-import port.in.model.QueryWorksCommand;
 
 @Service
 public class QueryWorksUseCaseImpl implements QueryWorksUseCase {

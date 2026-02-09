@@ -19,7 +19,7 @@ import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
 import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
 import com.geekapps.geeklibrary.application.port.in.model.to.PersonTO;
 import com.geekapps.geeklibrary.application.port.in.work.CreateWorkUseCase;
-import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.GetWorkByIdUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.QueryWorksUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.UpdateWorkUseCase;
@@ -51,7 +51,7 @@ class WorkContollerTest {
   private UpdateWorkUseCase updateWorkUseCase;
 
   @Mock
-  private DeleteWorkByIdUseCase deleteWorkByIdUseCase;
+  private DeleteWorkUseCase deleteWorkUseCase;
 
   @InjectMocks
   private WorkContoller workController;
@@ -192,7 +192,7 @@ class WorkContollerTest {
     Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     Assertions.assertThat(response.getBody()).isNull();
 
-    Mockito.verify(this.deleteWorkByIdUseCase).execute(this.workId);
+    Mockito.verify(this.deleteWorkUseCase).execute(this.workId);
   }
 
   @Test

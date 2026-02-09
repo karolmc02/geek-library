@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RestController;
 import com.geekapps.geeklibrary.application.port.in.work.CreateWorkUseCase;
-import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.GetWorkByIdUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.QueryWorksUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.UpdateWorkUseCase;
@@ -29,18 +29,17 @@ public class WorkContoller implements WorksApi {
 
   private final UpdateWorkUseCase updateWorkUseCase;
 
-  private final DeleteWorkByIdUseCase deleteWorkByIdUseCase;
+  private final DeleteWorkUseCase deleteWorkUseCase;
 
   public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
       final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase,
-      final UpdateWorkUseCase updateWorkUseCase,
-      final DeleteWorkByIdUseCase deleteWorkByIdUseCase) {
+      final UpdateWorkUseCase updateWorkUseCase, final DeleteWorkUseCase deleteWorkUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
     this.queryWorksUseCase = queryWorksUseCase;
     this.getWorkByIdUseCase = getWorkByIdUseCase;
     this.updateWorkUseCase = updateWorkUseCase;
-    this.deleteWorkByIdUseCase = deleteWorkByIdUseCase;
+    this.deleteWorkUseCase = deleteWorkUseCase;
   }
 
   @Override
@@ -53,7 +52,7 @@ public class WorkContoller implements WorksApi {
 
   @Override
   public ResponseEntity<Void> deleteWorkById(@NotNull final UUID id) {
-    this.deleteWorkByIdUseCase.execute(id);
+    this.deleteWorkUseCase.execute(id);
     return ResponseEntity.noContent().build();
   }
 

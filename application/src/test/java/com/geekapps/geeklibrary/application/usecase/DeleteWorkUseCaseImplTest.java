@@ -11,14 +11,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("DeleteWorkByIdUseCase Tests")
-class DeleteWorkByIdUseCaseImplTest {
+@DisplayName("DeleteWorkUseCase Tests")
+class DeleteWorkUseCaseImplTest {
 
   @Mock
   private WorkRepository workRepository;
 
   @InjectMocks
-  private DeleteWorkByIdUseCaseImpl deleteWorkByIdUseCase;
+  private DeleteWorkUseCaseImpl deleteWorkUseCase;
 
   @Test
   @DisplayName("Should delete work by ID")
@@ -27,7 +27,7 @@ class DeleteWorkByIdUseCaseImplTest {
     final var workId = UUID.randomUUID();
 
     // When
-    this.deleteWorkByIdUseCase.execute(workId);
+    this.deleteWorkUseCase.execute(workId);
 
     // Then
     Mockito.verify(this.workRepository).deleteById(workId);
@@ -40,7 +40,7 @@ class DeleteWorkByIdUseCaseImplTest {
     final var workId = UUID.randomUUID();
 
     // When
-    this.deleteWorkByIdUseCase.execute(workId);
+    this.deleteWorkUseCase.execute(workId);
 
     // Then
     Mockito.verify(this.workRepository).deleteById(workId);
@@ -54,8 +54,8 @@ class DeleteWorkByIdUseCaseImplTest {
     final var workId2 = UUID.randomUUID();
 
     // When
-    this.deleteWorkByIdUseCase.execute(workId1);
-    this.deleteWorkByIdUseCase.execute(workId2);
+    this.deleteWorkUseCase.execute(workId1);
+    this.deleteWorkUseCase.execute(workId2);
 
     // Then
     Mockito.verify(this.workRepository).deleteById(workId1);

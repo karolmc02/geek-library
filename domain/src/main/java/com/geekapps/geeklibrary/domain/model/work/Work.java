@@ -1,9 +1,12 @@
 package com.geekapps.geeklibrary.domain.model.work;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.annotation.Default;
 import com.geekapps.geeklibrary.domain.model.common.AggregateRoot;
 import com.geekapps.geeklibrary.domain.model.common.Person;
+import com.geekapps.geeklibrary.domain.model.edition.Edition;
 
 public class Work extends AggregateRoot {
 
@@ -17,6 +20,8 @@ public class Work extends AggregateRoot {
 
   protected Person illustrator;
 
+  protected List<Edition> editions;
+
   @Default
   public Work(final UUID id, final WorkType type, final String title, final String description,
       final Person author, final Person illustrator) {
@@ -26,6 +31,7 @@ public class Work extends AggregateRoot {
     this.description = description;
     this.author = author;
     this.illustrator = illustrator;
+    this.editions = new ArrayList<>();
   }
 
   public Work(final WorkType type, final String title, final String description,
@@ -35,6 +41,7 @@ public class Work extends AggregateRoot {
     this.description = description;
     this.author = author;
     this.illustrator = illustrator;
+    this.editions = new ArrayList<>();
   }
 
   public WorkType getType() {
@@ -77,6 +84,26 @@ public class Work extends AggregateRoot {
     this.illustrator = illustrator;
   }
 
+  public List<Edition> getEditions() {
+    return List.copyOf(this.editions);
+  }
+
+  public void addEdition(final Edition edition) {
+    if (edition != null) {
+      this.editions.add(edition);
+    }
+  }
+
+  public void removeEdition(final Edition edition) {
+    if (edition != null) {
+      this.editions.remove(edition);
+    }
+  }
+
+  public void setEditions(final List<Edition> editions) {
+    this.editions = editions != null ? List.copyOf(editions) : List.of();
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -86,6 +113,7 @@ public class Work extends AggregateRoot {
     result = prime * result + ((this.description == null) ? 0 : this.description.hashCode());
     result = prime * result + ((this.author == null) ? 0 : this.author.hashCode());
     result = prime * result + ((this.illustrator == null) ? 0 : this.illustrator.hashCode());
+    result = prime * result + ((this.editions == null) ? 0 : this.editions.hashCode());
     return result;
   }
 
@@ -122,6 +150,11 @@ public class Work extends AggregateRoot {
         return false;
     } else if (!this.illustrator.equals(other.illustrator))
       return false;
+    if (this.editions == null) {
+      if (other.editions != null)
+        return false;
+    } else if (!this.editions.equals(other.editions))
+      return false;
     return true;
   }
 
@@ -129,6 +162,6 @@ public class Work extends AggregateRoot {
   public String toString() {
     return "Work [id=" + this.id + ", type=" + this.type + ", title=" + this.title
         + ", description=" + this.description + ", author=" + this.author + ", illustrator="
-        + this.illustrator + "]";
+        + this.illustrator + ", editions=" + this.editions + "]";
   }
 }

@@ -1,13 +1,17 @@
 package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +34,9 @@ public class WorkEntity {
   @ManyToOne
   @JoinColumn(name = "illustrator_id")
   protected PersonEntity illustrator;
+
+  @OneToMany(mappedBy = "work", cascade = CascadeType.ALL, orphanRemoval = true)
+  protected List<EditionEntity> editions = new ArrayList<>();
 
   public UUID getId() {
     return this.id;
@@ -77,6 +84,14 @@ public class WorkEntity {
 
   public void setIllustrator(final PersonEntity illustrator) {
     this.illustrator = illustrator;
+  }
+
+  public List<EditionEntity> getEditions() {
+    return this.editions;
+  }
+
+  public void setEditions(final List<EditionEntity> editions) {
+    this.editions = editions;
   }
 
   @Override

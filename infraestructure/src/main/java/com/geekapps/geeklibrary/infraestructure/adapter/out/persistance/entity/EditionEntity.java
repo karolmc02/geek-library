@@ -25,7 +25,6 @@ public class EditionEntity {
 
   protected String languageIsoCode;
 
-  protected String countryName;
   protected String countryIsoCode;
 
   protected Boolean isOriginal;
@@ -69,14 +68,6 @@ public class EditionEntity {
     this.languageIsoCode = languageIsoCode;
   }
 
-  public String getCountryName() {
-    return this.countryName;
-  }
-
-  public void setCountryName(final String countryName) {
-    this.countryName = countryName;
-  }
-
   public String getCountryIsoCode() {
     return this.countryIsoCode;
   }
@@ -117,7 +108,6 @@ public class EditionEntity {
     result = prime * result + ((this.publisher == null) ? 0 : this.publisher.hashCode());
     result =
         prime * result + ((this.languageIsoCode == null) ? 0 : this.languageIsoCode.hashCode());
-    result = prime * result + ((this.countryName == null) ? 0 : this.countryName.hashCode());
     result = prime * result + ((this.isOriginal == null) ? 0 : this.isOriginal.hashCode());
     result = prime * result + ((this.colorMode == null) ? 0 : this.colorMode.hashCode());
     return result;
@@ -147,11 +137,6 @@ public class EditionEntity {
         return false;
     } else if (!this.languageIsoCode.equals(other.languageIsoCode))
       return false;
-    if (this.countryName == null) {
-      if (other.countryName != null)
-        return false;
-    } else if (!this.countryName.equals(other.countryName))
-      return false;
     if (this.isOriginal == null) {
       if (other.isOriginal != null)
         return false;
@@ -165,7 +150,7 @@ public class EditionEntity {
   @Override
   public String toString() {
     return String.format("EditionEntity[id=%s, publisher=%s, language=%s, country=%s]", this.id,
-        this.publisher, this.languageIsoCode, this.countryName);
+        this.publisher, this.languageIsoCode, this.countryIsoCode);
   }
 
 }

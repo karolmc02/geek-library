@@ -8,52 +8,23 @@ import org.junit.jupiter.api.Test;
 class CountryTest {
 
   @Test
-  @DisplayName("Should create country with valid name and ISO code")
-  void shouldCreateCountryWithValidNameAndIsoCode() {
+  @DisplayName("Should create country with valid ISO code")
+  void shouldCreateCountryWithValidIsoCode() {
     // Given
-    final String name = "Spain";
     final String isoCode = "ES";
 
     // When
-    final Country country = new Country(name, isoCode);
+    final Country country = new Country(isoCode);
 
     // Then
-    Assertions.assertThat(country.name()).isEqualTo("Spain");
     Assertions.assertThat(country.isoCode()).isEqualTo("ES");
-  }
-
-  @Test
-  @DisplayName("Should throw exception when name is null")
-  void shouldThrowExceptionWhenNameIsNull() {
-    // When & Then
-    Assertions.assertThatThrownBy(() -> new Country(null, "US"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Country name cannot be null or empty");
-  }
-
-  @Test
-  @DisplayName("Should throw exception when name is empty")
-  void shouldThrowExceptionWhenNameIsEmpty() {
-    // When & Then
-    Assertions.assertThatThrownBy(() -> new Country("", "US"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Country name cannot be null or empty");
-  }
-
-  @Test
-  @DisplayName("Should throw exception when name is blank")
-  void shouldThrowExceptionWhenNameIsBlank() {
-    // When & Then
-    Assertions.assertThatThrownBy(() -> new Country("   ", "US"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Country name cannot be null or empty");
   }
 
   @Test
   @DisplayName("Should throw exception when ISO code is null")
   void shouldThrowExceptionWhenIsoCodeIsNull() {
     // When & Then
-    Assertions.assertThatThrownBy(() -> new Country("United States", null))
+    Assertions.assertThatThrownBy(() -> new Country(null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("ISO code cannot be null or empty");
   }
@@ -62,7 +33,7 @@ class CountryTest {
   @DisplayName("Should throw exception when ISO code is empty")
   void shouldThrowExceptionWhenIsoCodeIsEmpty() {
     // When & Then
-    Assertions.assertThatThrownBy(() -> new Country("United States", ""))
+    Assertions.assertThatThrownBy(() -> new Country(""))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("ISO code cannot be null or empty");
   }
@@ -71,25 +42,25 @@ class CountryTest {
   @DisplayName("Should throw exception when ISO code format is invalid")
   void shouldThrowExceptionWhenIsoCodeFormatIsInvalid() {
     // When & Then
-    Assertions.assertThatThrownBy(() -> new Country("Spain", "ESP"))
+    Assertions.assertThatThrownBy(() -> new Country("ESP"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("ISO 3166-1 alpha-2 format");
 
-    Assertions.assertThatThrownBy(() -> new Country("Spain", "E"))
+    Assertions.assertThatThrownBy(() -> new Country("E"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("ISO 3166-1 alpha-2 format");
 
-    Assertions.assertThatThrownBy(() -> new Country("Spain", "es"))
+    Assertions.assertThatThrownBy(() -> new Country("es"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("ISO 3166-1 alpha-2 format");
   }
 
   @Test
-  @DisplayName("Should be equal when name and ISO code match")
-  void shouldBeEqualWhenNameAndIsoCodeMatch() {
+  @DisplayName("Should be equal when ISO code matches")
+  void shouldBeEqualWhenIsoCodeMatches() {
     // Given
-    final Country country1 = new Country("Japan", "JP");
-    final Country country2 = new Country("Japan", "JP");
+    final Country country1 = new Country("JP");
+    final Country country2 = new Country("JP");
 
     // Then
     Assertions.assertThat(country1).isEqualTo(country2);
@@ -100,23 +71,23 @@ class CountryTest {
   @DisplayName("Should not be equal when countries differ")
   void shouldNotBeEqualWhenCountriesDiffer() {
     // Given
-    final Country country1 = new Country("Japan", "JP");
-    final Country country2 = new Country("United States", "US");
+    final Country country1 = new Country("JP");
+    final Country country2 = new Country("US");
 
     // Then
     Assertions.assertThat(country1).isNotEqualTo(country2);
   }
 
   @Test
-  @DisplayName("Should convert to string with name and ISO code")
-  void shouldConvertToStringWithNameAndIsoCode() {
+  @DisplayName("Should convert to string with ISO code")
+  void shouldConvertToStringWithIsoCode() {
     // Given
-    final Country country = new Country("France", "FR");
+    final Country country = new Country("FR");
 
     // When
     final String result = country.toString();
 
     // Then
-    Assertions.assertThat(result).isEqualTo("France (FR)");
+    Assertions.assertThat(result).isEqualTo("FR");
   }
 }

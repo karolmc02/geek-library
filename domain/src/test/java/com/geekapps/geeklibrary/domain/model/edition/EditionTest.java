@@ -15,7 +15,7 @@ class EditionTest {
     final UUID id = UUID.randomUUID();
     final String publisher = "Editorial Ivrea";
     final Language language = new Language("es");
-    final Country country = new Country("Spain", "ES");
+    final Country country = new Country("ES");
     final Boolean isOriginal = false;
     final Format format = new Format("Tankobon", "Standard", 11.5, 17.5);
     final ColorMode colorMode = ColorMode.FULL_COLOR;
@@ -40,7 +40,7 @@ class EditionTest {
     // Given
     final String publisher = "Shueisha";
     final Language language = new Language("ja");
-    final Country country = new Country("Japan", "JP");
+    final Country country = new Country("JP");
     final Boolean isOriginal = true;
     final Format format = new Format("Tankobon", "Standard", 11.5, 17.5);
     final ColorMode colorMode = ColorMode.BLACK_AND_WHITE;
@@ -107,8 +107,8 @@ class EditionTest {
   @DisplayName("Should update country")
   void shouldUpdateCountry() {
     // Given
-    final Country oldCountry = new Country("United States", "US");
-    final Country newCountry = new Country("Canada", "CA");
+    final Country oldCountry = new Country("US");
+    final Country newCountry = new Country("CA");
     final Edition edition = new Edition("Publisher", null, oldCountry, null, null, null);
 
     // When
@@ -166,7 +166,7 @@ class EditionTest {
     // Given
     final UUID id = UUID.randomUUID();
     final Language language = new Language("en");
-    final Country country = new Country("United States", "US");
+    final Country country = new Country("US");
     final Format format = new Format("Standard", "Standard format", 15.0, 20.0);
 
     final Edition edition1 =
@@ -185,7 +185,7 @@ class EditionTest {
     // Given
     final UUID id = UUID.randomUUID();
     final Language language = new Language("en");
-    final Country country = new Country("United States", "US");
+    final Country country = new Country("US");
     final Format format = new Format("Standard", "Standard format", 15.0, 20.0);
 
     final Edition edition1 =
@@ -226,7 +226,7 @@ class EditionTest {
   void shouldConvertToStringWithAllProperties() {
     // Given
     final Language language = new Language("es");
-    final Country country = new Country("Spain", "ES");
+    final Country country = new Country("ES");
     final Format format = new Format("Tankobon", "Standard", 11.5, 17.5);
     final Edition edition =
         new Edition("Editorial Ivrea", language, country, false, format, ColorMode.FULL_COLOR);

@@ -10,12 +10,10 @@ public interface EditionEntityMapper {
 
   @Mapping(target = "work", ignore = true)
   @Mapping(target = "languageIsoCode", source = "language.isoCode")
-  @Mapping(target = "countryName", source = "country.name")
   @Mapping(target = "countryIsoCode", source = "country.isoCode")
   EditionEntity toEntity(Edition edition);
 
   @Mapping(target = "language.isoCode", source = "languageIsoCode")
-  @Mapping(target = "country.name", source = "countryName")
   @Mapping(target = "country.isoCode", source = "countryIsoCode")
   Edition toDomain(EditionEntity editionEntity);
 

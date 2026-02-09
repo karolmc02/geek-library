@@ -391,16 +391,11 @@ components:
     country:
       type: object
       properties:
-        name:
-          type: string
-          description: Country name
-          example: United States
         isoCode:
           type: string
           description: ISO 3166 country code
           example: US
       required:
-        - name
         - isoCode
     format:
       type: object

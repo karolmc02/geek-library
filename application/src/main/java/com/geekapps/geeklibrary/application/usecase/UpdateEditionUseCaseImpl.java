@@ -31,7 +31,7 @@ class UpdateEditionUseCaseImpl implements UpdateEditionUseCase {
     this.editionValidator.validateEditionExists(input.editionId(), input.workId());
 
     final var language = new Language(input.language().isoCode());
-    final var country = new Country(input.country().name(), input.country().isoCode());
+    final var country = new Country(input.country().isoCode());
     final var format = new Format(input.format().id(), input.format().name(),
         input.format().description(), input.format().widthCm(), input.format().heightCm());
 

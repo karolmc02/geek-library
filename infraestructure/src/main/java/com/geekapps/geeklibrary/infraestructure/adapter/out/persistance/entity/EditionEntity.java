@@ -2,6 +2,7 @@ package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.model.edition.ColorMode;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,7 +18,7 @@ public class EditionEntity {
   @Id
   protected UUID id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "work_id", nullable = false)
   protected WorkEntity work;
 
@@ -29,7 +30,7 @@ public class EditionEntity {
 
   protected Boolean isOriginal;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "format_id")
   protected FormatEntity format;
 

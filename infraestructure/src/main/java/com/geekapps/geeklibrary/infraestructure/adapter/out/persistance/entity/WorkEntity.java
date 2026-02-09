@@ -27,11 +27,11 @@ public class WorkEntity {
   protected String title;
   protected String description;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "author_id")
   protected PersonEntity author;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "illustrator_id")
   protected PersonEntity illustrator;
 

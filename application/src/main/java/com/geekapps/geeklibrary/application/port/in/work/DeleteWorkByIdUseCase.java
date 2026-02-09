@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.application.port.in;
+package com.geekapps.geeklibrary.application.port.in.work;
 
 import java.util.UUID;
 import com.geekapps.geeklibrary.application.common.UseCase;

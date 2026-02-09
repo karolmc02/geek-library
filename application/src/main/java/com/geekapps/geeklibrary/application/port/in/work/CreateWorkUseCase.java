@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.application.port.in;
+package com.geekapps.geeklibrary.application.port.in.work;
 
 import com.geekapps.geeklibrary.application.common.UseCase;
 import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;

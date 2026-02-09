@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
+import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("DeleteWorkByIdUseCase Tests")

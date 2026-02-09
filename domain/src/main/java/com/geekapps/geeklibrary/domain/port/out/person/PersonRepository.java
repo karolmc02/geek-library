@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.domain.port.out;
+package com.geekapps.geeklibrary.domain.port.out.person;
 
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.model.common.Person;

@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.domain.port.out;
+package com.geekapps.geeklibrary.domain.port.out.edition;
 
 import java.util.List;
 import java.util.UUID;

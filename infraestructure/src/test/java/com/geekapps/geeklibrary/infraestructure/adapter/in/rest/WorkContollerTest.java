@@ -14,6 +14,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
+import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
+import com.geekapps.geeklibrary.application.port.in.model.to.PersonTO;
+import com.geekapps.geeklibrary.application.port.in.work.CreateWorkUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.GetWorkByIdUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.QueryWorksUseCase;
+import com.geekapps.geeklibrary.application.port.in.work.UpdateWorkUseCase;
 import com.geekapps.geeklibrary.client.api.model.PersonDTO;
 import com.geekapps.geeklibrary.client.api.model.WorkDTO;
 import com.geekapps.geeklibrary.client.api.model.WorkTypeDTO;
@@ -21,15 +30,6 @@ import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
 import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMapper;
-import com.geekapps.geeklibrary.application.port.in.CreateWorkUseCase;
-import com.geekapps.geeklibrary.application.port.in.DeleteWorkByIdUseCase;
-import com.geekapps.geeklibrary.application.port.in.GetWorkByIdUseCase;
-import com.geekapps.geeklibrary.application.port.in.QueryWorksUseCase;
-import com.geekapps.geeklibrary.application.port.in.UpdateWorkUseCase;
-import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;
-import com.geekapps.geeklibrary.application.port.in.model.PersonTO;
-import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
-import com.geekapps.geeklibrary.application.port.in.model.UpdateWorkCommand;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("WorkController Tests")

@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;
-import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
+import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GetWorkByIdUseCase Tests")

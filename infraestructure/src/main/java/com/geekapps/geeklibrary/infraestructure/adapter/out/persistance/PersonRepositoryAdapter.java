@@ -3,7 +3,7 @@ package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance;
 import java.util.UUID;
 import org.springframework.stereotype.Repository;
 import com.geekapps.geeklibrary.domain.model.common.Person;
-import com.geekapps.geeklibrary.domain.port.out.PersonRepository;
+import com.geekapps.geeklibrary.domain.port.out.person.PersonRepository;
 import com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.mapper.PersonEntityMapper;
 
 @Repository

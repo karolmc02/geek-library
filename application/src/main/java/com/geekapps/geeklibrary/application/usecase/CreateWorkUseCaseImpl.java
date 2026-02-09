@@ -1,13 +1,13 @@
 package com.geekapps.geeklibrary.application.usecase;
 
 import org.springframework.stereotype.Service;
-import com.geekapps.geeklibrary.application.port.in.CreateWorkUseCase;
 import com.geekapps.geeklibrary.application.port.in.model.CreateWorkCommand;
-import com.geekapps.geeklibrary.application.port.in.model.PersonTO;
+import com.geekapps.geeklibrary.application.port.in.model.to.PersonTO;
+import com.geekapps.geeklibrary.application.port.in.work.CreateWorkUseCase;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
-import com.geekapps.geeklibrary.domain.port.out.PersonRepository;
-import com.geekapps.geeklibrary.domain.port.out.WorkRepository;
+import com.geekapps.geeklibrary.domain.port.out.person.PersonRepository;
+import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
 
 @Service
 class CreateWorkUseCaseImpl implements CreateWorkUseCase {

@@ -3,36 +3,31 @@ package com.geekapps.geeklibrary.application.usecase;
 import org.springframework.stereotype.Service;
 import com.geekapps.geeklibrary.application.port.in.edition.GetEditionByIdUseCase;
 import com.geekapps.geeklibrary.application.port.in.model.edition.GetEditionByIdCommand;
-import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.edition.Edition;
 import com.geekapps.geeklibrary.domain.port.out.edition.EditionRepository;
-import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
+import com.geekapps.geeklibrary.domain.service.EditionValidator;
+import com.geekapps.geeklibrary.domain.service.WorkValidator;
 
 @Service
 class GetEditionByIdUseCaseImpl implements GetEditionByIdUseCase {
 
   private final EditionRepository editionRepository;
-  private final WorkRepository workRepository;
+  private final WorkValidator workValidator;
+  private final EditionValidator editionValidator;
 
   public GetEditionByIdUseCaseImpl(final EditionRepository editionRepository,
-      final WorkRepository workRepository) {
+      final WorkValidator workValidator, final EditionValidator editionValidator) {
     this.editionRepository = editionRepository;
-    this.workRepository = workRepository;
+    this.workValidator = workValidator;
+    this.editionValidator = editionValidator;
   }
 
   @Override
   public Edition execute(final GetEditionByIdCommand input) {
-    final var work = this.workRepository.findById(input.workId());
-    if (work == null) {
-      throw new EntityNotFoundException("Work", input.workId());
-    }
+    this.workValidator.validateWorkExists(input.workId());
+    this.editionValidator.validateEditionExists(input.editionId(), input.workId());
 
-    final var edition = this.editionRepository.findById(input.editionId(), input.workId());
-    if (edition == null) {
-      throw new EntityNotFoundException("Edition", input.editionId());
-    }
-
-    return edition;
+    return this.editionRepository.findById(input.editionId(), input.workId());
   }
 
 }

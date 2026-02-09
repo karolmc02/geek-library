@@ -3,33 +3,29 @@ package com.geekapps.geeklibrary.application.usecase;
 import org.springframework.stereotype.Service;
 import com.geekapps.geeklibrary.application.port.in.edition.CreateEditionUseCase;
 import com.geekapps.geeklibrary.application.port.in.model.edition.CreateEditionCommand;
-import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.model.edition.Country;
 import com.geekapps.geeklibrary.domain.model.edition.Edition;
 import com.geekapps.geeklibrary.domain.model.edition.Format;
 import com.geekapps.geeklibrary.domain.model.edition.Language;
 import com.geekapps.geeklibrary.domain.port.out.edition.EditionRepository;
-import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
+import com.geekapps.geeklibrary.domain.service.WorkValidator;
 
 @Service
 class CreateEditionUseCaseImpl implements CreateEditionUseCase {
 
   private final EditionRepository editionRepository;
-  private final WorkRepository workRepository;
+  private final WorkValidator workValidator;
 
   public CreateEditionUseCaseImpl(final EditionRepository editionRepository,
-      final WorkRepository workRepository) {
+      final WorkValidator workValidator) {
     this.editionRepository = editionRepository;
-    this.workRepository = workRepository;
+    this.workValidator = workValidator;
   }
 
   @Override
   public Edition execute(final CreateEditionCommand input) {
 
-    final var work = this.workRepository.findById(input.workId());
-    if (work == null) {
-      throw new EntityNotFoundException("Work", input.workId());
-    }
+    this.workValidator.validateWorkExists(input.workId());
 
     final var language = new Language(input.language().isoCode());
     final var country = new Country(input.country().name(), input.country().isoCode());

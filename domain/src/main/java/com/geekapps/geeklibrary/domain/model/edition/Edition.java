@@ -1,9 +1,12 @@
 package com.geekapps.geeklibrary.domain.model.edition;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.annotation.Default;
 import com.geekapps.geeklibrary.domain.model.common.DomainEntity;
+import com.geekapps.geeklibrary.domain.model.volume.Volume;
 
 
 public class Edition extends DomainEntity {
@@ -14,6 +17,7 @@ public class Edition extends DomainEntity {
   private Boolean isOriginal;
   private Format format;
   private ColorMode colorMode;
+  private final List<Volume> volumes;
 
   @Default
   public Edition(final UUID id, final String publisher, final Language language,
@@ -26,6 +30,7 @@ public class Edition extends DomainEntity {
     this.isOriginal = isOriginal;
     this.format = format;
     this.colorMode = colorMode;
+    this.volumes = new ArrayList<>();
   }
 
   public Edition(final String publisher, final Language language, final Country country,
@@ -36,6 +41,7 @@ public class Edition extends DomainEntity {
     this.isOriginal = isOriginal;
     this.format = format;
     this.colorMode = colorMode;
+    this.volumes = new ArrayList<>();
   }
 
   public String getPublisher() {
@@ -84,6 +90,22 @@ public class Edition extends DomainEntity {
 
   public void setColorMode(final ColorMode colorMode) {
     this.colorMode = colorMode;
+  }
+
+  public List<Volume> getVolumes() {
+    return List.copyOf(this.volumes);
+  }
+
+  public void addVolume(final Volume volume) {
+    if (volume != null) {
+      this.volumes.add(volume);
+    }
+  }
+
+  public void removeVolume(final Volume volume) {
+    if (volume != null) {
+      this.volumes.remove(volume);
+    }
   }
 
   @Override

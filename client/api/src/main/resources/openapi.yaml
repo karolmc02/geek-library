@@ -13,6 +13,8 @@ tags:
     description: Operations related to works in the Geek Library
   - name: editions
     description: Operations related to editions of works
+  - name: volumes
+    description: Operations related to volumes of editions
 paths:
   /works:
     get:
@@ -348,6 +350,178 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
+  /works/{workId}/editions/{editionId}/volumes:
+    get:
+      summary: Get all volumes for an edition
+      operationId: getVolumesByEditionId
+      description: Retrieve all volumes of a specific edition from the Geek Library.
+      tags:
+        - volumes
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  volumes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/volume'
+        '404':
+          description: Work or Edition not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      summary: Create a new volume for an edition
+      operationId: createVolume
+      description: Create a new volume for a specific edition in the Geek Library.
+      tags:
+        - volumes
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+      requestBody:
+        description: Volume object to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/volume'
+      responses:
+        '201':
+          description: Volume created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/volume'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Work or Edition not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+  /works/{workId}/editions/{editionId}/volumes/{volumeId}:
+    get:
+      summary: Get volume by ID
+      operationId: getVolumeById
+      description: Retrieve a specific volume by its ID for a given edition.
+      tags:
+        - volumes
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+        - $ref: '#/components/parameters/volumeId'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/volume'
+        '404':
+          description: Work, Edition or Volume not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    put:
+      summary: Update volume by ID
+      operationId: updateVolumeById
+      description: Update a specific volume by its ID for a given edition.
+      tags:
+        - volumes
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+        - $ref: '#/components/parameters/volumeId'
+      requestBody:
+        description: Volume object with updated information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/volume'
+      responses:
+        '200':
+          description: Volume updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/volume'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '404':
+          description: Work, Edition or Volume not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    delete:
+      summary: Delete volume by ID
+      operationId: deleteVolumeById
+      description: Delete a specific volume by its ID from an edition.
+      tags:
+        - volumes
+      parameters:
+        - $ref: '#/components/parameters/workId'
+        - $ref: '#/components/parameters/editionId'
+        - $ref: '#/components/parameters/volumeId'
+      responses:
+        '204':
+          description: Volume deleted successfully
+        '404':
+          description: Work, Edition or Volume not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
 components:
   parameters:
     workId:
@@ -362,6 +536,14 @@ components:
       name: editionId
       in: path
       description: ID of the edition
+      required: true
+      schema:
+        type: string
+        format: uuid
+    volumeId:
+      name: volumeId
+      in: path
+      description: ID of the volume
       required: true
       schema:
         type: string
@@ -425,6 +607,57 @@ components:
         - name
         - widthCm
         - heightCm
+    money:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency code (ISO 4217)
+          example: USD
+        amount:
+          type: number
+          format: double
+          description: Monetary amount
+          example: 9.99
+      required:
+        - currency
+        - amount
+    volume:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          description: Volume title
+          example: Chapter 1 - The Beginning
+        number:
+          type: integer
+          description: Volume number
+          example: 1
+        price:
+          $ref: '#/components/schemas/money'
+        publicationDate:
+          type: string
+          format: date
+          description: Publication date
+          example: 2024-01-15
+        isbn:
+          type: string
+          description: ISBN number
+          example: 978-1-4215-1234-5
+        pages:
+          type: integer
+          description: Number of pages
+          example: 192
+      required:
+        - title
+        - number
+        - price
+        - publicationDate
+        - isbn
+        - pages
     edition:
       type: object
       properties:

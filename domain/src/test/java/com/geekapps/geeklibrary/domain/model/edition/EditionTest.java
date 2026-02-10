@@ -1,9 +1,14 @@
 package com.geekapps.geeklibrary.domain.model.edition;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import com.geekapps.geeklibrary.domain.model.common.Money;
+import com.geekapps.geeklibrary.domain.model.volume.Volume;
 
 @DisplayName("Edition Tests")
 class EditionTest {
@@ -237,7 +242,7 @@ class EditionTest {
     // Then
     Assertions.assertThat(result).contains("Editorial Ivrea");
     Assertions.assertThat(result).contains("es");
-    Assertions.assertThat(result).contains("Spain");
+    Assertions.assertThat(result).contains("ES");
     Assertions.assertThat(result).contains("false");
     Assertions.assertThat(result).contains("Tankobon");
   }
@@ -261,5 +266,138 @@ class EditionTest {
 
     // Then
     Assertions.assertThat(edition).isNotEqualTo(notAnEdition);
+  }
+
+  @Test
+  @DisplayName("Should initialize volumes list as empty")
+  void shouldInitializeVolumesListAsEmpty() {
+    // Given & When
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+
+    // Then
+    Assertions.assertThat(edition.getVolumes()).isNotNull();
+    Assertions.assertThat(edition.getVolumes()).isEmpty();
+  }
+
+  @Test
+  @DisplayName("Should return immutable copy of volumes")
+  void shouldReturnImmutableCopyOfVolumes() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-2345-6789-0", 200);
+    edition.addVolume(volume);
+
+    // When
+    final List<Volume> volumes = edition.getVolumes();
+
+    // Then
+    Assertions
+        .assertThatThrownBy(() -> volumes.add(new Volume("Volume 2", 2,
+            new Money("USD", new BigDecimal("9.99")), LocalDate.now(), "978-1-1111-2222-3", 180)))
+        .isInstanceOf(UnsupportedOperationException.class);
+  }
+
+  @Test
+  @DisplayName("Should add volume successfully")
+  void shouldAddVolumeSuccessfully() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.of(2024, 1, 15), "978-1-2345-6789-0", 200);
+
+    // When
+    edition.addVolume(volume);
+
+    // Then
+    Assertions.assertThat(edition.getVolumes()).hasSize(1);
+    Assertions.assertThat(edition.getVolumes()).contains(volume);
+  }
+
+  @Test
+  @DisplayName("Should add multiple volumes")
+  void shouldAddMultipleVolumes() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume1 = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.of(2024, 1, 15), "978-1-2345-6789-0", 200);
+    final Volume volume2 = new Volume("Volume 2", 2, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.of(2024, 3, 20), "978-1-1111-2222-3", 180);
+    final Volume volume3 = new Volume("Volume 3", 3, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.of(2024, 5, 10), "978-1-9999-8888-7", 220);
+
+    // When
+    edition.addVolume(volume1);
+    edition.addVolume(volume2);
+    edition.addVolume(volume3);
+
+    // Then
+    Assertions.assertThat(edition.getVolumes()).hasSize(3);
+    Assertions.assertThat(edition.getVolumes()).containsExactly(volume1, volume2, volume3);
+  }
+
+  @Test
+  @DisplayName("Should not add null volume")
+  void shouldNotAddNullVolume() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+
+    // When
+    edition.addVolume(null);
+
+    // Then
+    Assertions.assertThat(edition.getVolumes()).isEmpty();
+  }
+
+  @Test
+  @DisplayName("Should remove volume successfully")
+  void shouldRemoveVolumeSuccessfully() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume1 = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-2345-6789-0", 200);
+    final Volume volume2 = new Volume("Volume 2", 2, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-1111-2222-3", 180);
+    edition.addVolume(volume1);
+    edition.addVolume(volume2);
+
+    // When
+    edition.removeVolume(volume1);
+
+    // Then
+    Assertions.assertThat(edition.getVolumes()).hasSize(1);
+    Assertions.assertThat(edition.getVolumes()).contains(volume2);
+    Assertions.assertThat(edition.getVolumes()).doesNotContain(volume1);
+  }
+
+  @Test
+  @DisplayName("Should not fail when removing null volume")
+  void shouldNotFailWhenRemovingNullVolume() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-2345-6789-0", 200);
+    edition.addVolume(volume);
+
+    // When & Then
+    Assertions.assertThatCode(() -> edition.removeVolume(null)).doesNotThrowAnyException();
+    Assertions.assertThat(edition.getVolumes()).hasSize(1);
+  }
+
+  @Test
+  @DisplayName("Should not fail when removing non-existent volume")
+  void shouldNotFailWhenRemovingNonExistentVolume() {
+    // Given
+    final Edition edition = new Edition("Publisher", null, null, null, null, null);
+    final Volume volume1 = new Volume("Volume 1", 1, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-2345-6789-0", 200);
+    final Volume volume2 = new Volume("Volume 2", 2, new Money("USD", new BigDecimal("9.99")),
+        LocalDate.now(), "978-1-1111-2222-3", 180);
+    edition.addVolume(volume1);
+
+    // When & Then
+    Assertions.assertThatCode(() -> edition.removeVolume(volume2)).doesNotThrowAnyException();
+    Assertions.assertThat(edition.getVolumes()).hasSize(1);
+    Assertions.assertThat(edition.getVolumes()).contains(volume1);
   }
 }

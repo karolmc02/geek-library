@@ -1,5 +1,7 @@
 package com.geekapps.geeklibrary.infraestructure.adapter.out.persistance.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import com.geekapps.geeklibrary.domain.model.edition.ColorMode;
 import jakarta.persistence.CascadeType;
@@ -9,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +39,9 @@ public class EditionEntity {
 
   @Enumerated(EnumType.STRING)
   protected ColorMode colorMode;
+
+  @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
+  protected List<VolumeEntity> volumes = new ArrayList<>();
 
   public UUID getId() {
     return this.id;
@@ -99,6 +105,14 @@ public class EditionEntity {
 
   public void setColorMode(final ColorMode colorMode) {
     this.colorMode = colorMode;
+  }
+
+  public List<VolumeEntity> getVolumes() {
+    return this.volumes;
+  }
+
+  public void setVolumes(final List<VolumeEntity> volumes) {
+    this.volumes = volumes;
   }
 
   @Override

@@ -1,5 +1,7 @@
 package com.geekapps.geeklibrary.domain.validation;
 
+import java.math.BigDecimal;
+import com.geekapps.geeklibrary.domain.exception.InvalidAmountException;
 import com.geekapps.geeklibrary.domain.exception.InvalidCountryCodeException;
 import com.geekapps.geeklibrary.domain.exception.InvalidDimensionException;
 import com.geekapps.geeklibrary.domain.exception.InvalidLanguageCodeException;
@@ -58,6 +60,17 @@ public final class DomainValidator {
   public static Double requirePositiveDimension(final Double value, final String dimensionName) {
     DomainValidator.validatePositiveDimension(value, dimensionName);
     return value;
+  }
+
+  public static void validatePositiveAmount(final BigDecimal amount, final String fieldName) {
+    if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new InvalidAmountException(fieldName);
+    }
+  }
+
+  public static BigDecimal requirePositiveAmount(final BigDecimal amount, final String fieldName) {
+    DomainValidator.validatePositiveAmount(amount, fieldName);
+    return amount;
   }
 
 }

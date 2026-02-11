@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.geekapps.geeklibrary.application.port.in.model.QueryWorksCommand;
+import com.geekapps.geeklibrary.application.usecase.work.QueryWorksUseCaseImpl;
 import com.geekapps.geeklibrary.domain.model.common.Person;
 import com.geekapps.geeklibrary.domain.model.work.Work;
 import com.geekapps.geeklibrary.domain.model.work.WorkType;

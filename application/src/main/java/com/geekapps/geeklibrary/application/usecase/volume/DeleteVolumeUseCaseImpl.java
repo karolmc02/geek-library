@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.application.usecase;
+package com.geekapps.geeklibrary.application.usecase.volume;
 
 import org.springframework.stereotype.Service;
 import com.geekapps.geeklibrary.application.port.in.model.volume.DeleteVolumeCommand;

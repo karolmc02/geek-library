@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.application.usecase;
+package com.geekapps.geeklibrary.application.usecase.edition;
 
 import java.util.List;
 import java.util.UUID;

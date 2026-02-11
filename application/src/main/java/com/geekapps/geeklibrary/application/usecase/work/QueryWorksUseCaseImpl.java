@@ -1,4 +1,4 @@
-package com.geekapps.geeklibrary.application.usecase;
+package com.geekapps.geeklibrary.application.usecase.work;
 
 import java.util.List;
 import org.springframework.stereotype.Service;

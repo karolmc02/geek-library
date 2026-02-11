@@ -4,11 +4,11 @@ import java.util.UUID;
 import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.port.out.edition.EditionRepository;
 
-public class EditionValidator {
+public class EditionValidatorService {
 
   private final EditionRepository editionRepository;
 
-  public EditionValidator(final EditionRepository editionRepository) {
+  public EditionValidatorService(final EditionRepository editionRepository) {
     this.editionRepository = editionRepository;
   }
 

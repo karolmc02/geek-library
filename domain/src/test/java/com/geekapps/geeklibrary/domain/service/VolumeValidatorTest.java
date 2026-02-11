@@ -23,11 +23,11 @@ class VolumeValidatorTest {
   @Mock
   private VolumeRepository volumeRepository;
 
-  private VolumeValidator volumeValidator;
+  private VolumeValidatorService volumeValidator;
 
   @BeforeEach
   void setUp() {
-    this.volumeValidator = new VolumeValidator(this.volumeRepository);
+    this.volumeValidator = new VolumeValidatorService(this.volumeRepository);
   }
 
   @Test

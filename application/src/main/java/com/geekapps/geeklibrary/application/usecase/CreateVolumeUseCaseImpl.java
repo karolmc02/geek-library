@@ -6,18 +6,18 @@ import com.geekapps.geeklibrary.application.port.in.volume.CreateVolumeUseCase;
 import com.geekapps.geeklibrary.domain.model.common.Money;
 import com.geekapps.geeklibrary.domain.model.volume.Volume;
 import com.geekapps.geeklibrary.domain.port.out.volume.VolumeRepository;
-import com.geekapps.geeklibrary.domain.service.EditionValidator;
-import com.geekapps.geeklibrary.domain.service.WorkValidator;
+import com.geekapps.geeklibrary.domain.service.EditionValidatorService;
+import com.geekapps.geeklibrary.domain.service.WorkValidatorService;
 
 @Service
 class CreateVolumeUseCaseImpl implements CreateVolumeUseCase {
 
   private final VolumeRepository volumeRepository;
-  private final WorkValidator workValidator;
-  private final EditionValidator editionValidator;
+  private final WorkValidatorService workValidator;
+  private final EditionValidatorService editionValidator;
 
   public CreateVolumeUseCaseImpl(final VolumeRepository volumeRepository,
-      final WorkValidator workValidator, final EditionValidator editionValidator) {
+      final WorkValidatorService workValidator, final EditionValidatorService editionValidator) {
     this.volumeRepository = volumeRepository;
     this.workValidator = workValidator;
     this.editionValidator = editionValidator;

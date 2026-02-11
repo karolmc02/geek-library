@@ -4,11 +4,11 @@ import java.util.UUID;
 import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.port.out.work.WorkRepository;
 
-public class WorkValidator {
+public class WorkValidatorService {
 
   private final WorkRepository workRepository;
 
-  public WorkValidator(final WorkRepository workRepository) {
+  public WorkValidatorService(final WorkRepository workRepository) {
     this.workRepository = workRepository;
   }
 

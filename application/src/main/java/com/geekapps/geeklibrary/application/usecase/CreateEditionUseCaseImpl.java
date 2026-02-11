@@ -8,16 +8,16 @@ import com.geekapps.geeklibrary.domain.model.edition.Edition;
 import com.geekapps.geeklibrary.domain.model.edition.Format;
 import com.geekapps.geeklibrary.domain.model.edition.Language;
 import com.geekapps.geeklibrary.domain.port.out.edition.EditionRepository;
-import com.geekapps.geeklibrary.domain.service.WorkValidator;
+import com.geekapps.geeklibrary.domain.service.WorkValidatorService;
 
 @Service
 class CreateEditionUseCaseImpl implements CreateEditionUseCase {
 
   private final EditionRepository editionRepository;
-  private final WorkValidator workValidator;
+  private final WorkValidatorService workValidator;
 
   public CreateEditionUseCaseImpl(final EditionRepository editionRepository,
-      final WorkValidator workValidator) {
+      final WorkValidatorService workValidator) {
     this.editionRepository = editionRepository;
     this.workValidator = workValidator;
   }

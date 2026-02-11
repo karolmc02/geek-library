@@ -4,11 +4,11 @@ import java.util.UUID;
 import com.geekapps.geeklibrary.domain.exception.EntityNotFoundException;
 import com.geekapps.geeklibrary.domain.port.out.volume.VolumeRepository;
 
-public class VolumeValidator {
+public class VolumeValidatorService {
 
   private final VolumeRepository volumeRepository;
 
-  public VolumeValidator(final VolumeRepository volumeRepository) {
+  public VolumeValidatorService(final VolumeRepository volumeRepository) {
     this.volumeRepository = volumeRepository;
   }
 

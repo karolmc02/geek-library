@@ -5,18 +5,18 @@ import com.geekapps.geeklibrary.application.port.in.edition.GetEditionByIdUseCas
 import com.geekapps.geeklibrary.application.port.in.model.edition.GetEditionByIdCommand;
 import com.geekapps.geeklibrary.domain.model.edition.Edition;
 import com.geekapps.geeklibrary.domain.port.out.edition.EditionRepository;
-import com.geekapps.geeklibrary.domain.service.EditionValidator;
-import com.geekapps.geeklibrary.domain.service.WorkValidator;
+import com.geekapps.geeklibrary.domain.service.EditionValidatorService;
+import com.geekapps.geeklibrary.domain.service.WorkValidatorService;
 
 @Service
 class GetEditionByIdUseCaseImpl implements GetEditionByIdUseCase {
 
   private final EditionRepository editionRepository;
-  private final WorkValidator workValidator;
-  private final EditionValidator editionValidator;
+  private final WorkValidatorService workValidator;
+  private final EditionValidatorService editionValidator;
 
   public GetEditionByIdUseCaseImpl(final EditionRepository editionRepository,
-      final WorkValidator workValidator, final EditionValidator editionValidator) {
+      final WorkValidatorService workValidator, final EditionValidatorService editionValidator) {
     this.editionRepository = editionRepository;
     this.workValidator = workValidator;
     this.editionValidator = editionValidator;

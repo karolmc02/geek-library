@@ -4,12 +4,14 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.RestController;
+import com.geekapps.geeklibrary.application.port.in.work.CreateWorkPreviewUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.CreateWorkUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.DeleteWorkUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.GetWorkByIdUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.QueryWorksUseCase;
 import com.geekapps.geeklibrary.application.port.in.work.UpdateWorkUseCase;
 import com.geekapps.geeklibrary.client.api.api.WorksApi;
+import com.geekapps.geeklibrary.client.api.model.CreateWorkPreviewRequestDTO;
 import com.geekapps.geeklibrary.client.api.model.QueryWorks200ResponseDTO;
 import com.geekapps.geeklibrary.client.api.model.WorkDTO;
 import com.geekapps.geeklibrary.infraestructure.adapter.in.rest.mapper.WorkMapper;
@@ -31,15 +33,19 @@ public class WorkContoller implements WorksApi {
 
   private final DeleteWorkUseCase deleteWorkUseCase;
 
+  private final CreateWorkPreviewUseCase createWorkPreviewUseCase;
+
   public WorkContoller(final WorkMapper workMapper, final CreateWorkUseCase createWorkUseCase,
       final QueryWorksUseCase queryWorksUseCase, final GetWorkByIdUseCase getWorkByIdUseCase,
-      final UpdateWorkUseCase updateWorkUseCase, final DeleteWorkUseCase deleteWorkUseCase) {
+      final UpdateWorkUseCase updateWorkUseCase, final DeleteWorkUseCase deleteWorkUseCase,
+      final CreateWorkPreviewUseCase createWorkPreviewUseCase) {
     this.workMapper = workMapper;
     this.createWorkUseCase = createWorkUseCase;
     this.queryWorksUseCase = queryWorksUseCase;
     this.getWorkByIdUseCase = getWorkByIdUseCase;
     this.updateWorkUseCase = updateWorkUseCase;
     this.deleteWorkUseCase = deleteWorkUseCase;
+    this.createWorkPreviewUseCase = createWorkPreviewUseCase;
   }
 
   @Override
@@ -79,6 +85,16 @@ public class WorkContoller implements WorksApi {
     final var updatedWork = this.updateWorkUseCase.execute(updateWorkCommand);
     final var updatedWorkDTO = this.workMapper.toWorkDTO(updatedWork);
     return ResponseEntity.ok().body(updatedWorkDTO);
+  }
+
+  @Override
+  public ResponseEntity<WorkDTO> createWorkPreview(
+      @Valid final CreateWorkPreviewRequestDTO createWorkPreviewRequestDTO) {
+    final var createWorkPreviewCommand =
+        this.workMapper.toCreateWorkPreviewCommand(createWorkPreviewRequestDTO);
+    final var work = this.createWorkPreviewUseCase.execute(createWorkPreviewCommand);
+    final var workDTO = this.workMapper.toWorkDTO(work);
+    return ResponseEntity.ok().body(workDTO);
   }
 
 }

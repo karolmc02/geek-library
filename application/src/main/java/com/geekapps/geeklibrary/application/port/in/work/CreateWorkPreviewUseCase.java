@@ -1,0 +1,9 @@
+package com.geekapps.geeklibrary.application.port.in.work;
+
+import com.geekapps.geeklibrary.application.common.UseCase;
+import com.geekapps.geeklibrary.application.port.in.model.CreateWorkPreviewCommand;
+import com.geekapps.geeklibrary.domain.model.work.Work;
+
+public interface CreateWorkPreviewUseCase extends UseCase<CreateWorkPreviewCommand, Work> {
+
+}

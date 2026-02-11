@@ -16,6 +16,53 @@ tags:
   - name: volumes
     description: Operations related to volumes of editions
 paths:
+  /works/previews:
+    post:
+      summary: Create work preview from URL
+      operationId: createWorkPreview
+      description: Extract and preview work data with its editions and volumes from an external URL. This endpoint scrapes the provided URL and returns a preview of the extracted data for review and completion before saving. Fields may be incomplete or empty.
+      tags:
+        - works
+      requestBody:
+        description: URL to extract work data from
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: External URL to extract work data from
+                  example: https://example.com/manga/one-piece
+              required:
+                - url
+      responses:
+        '200':
+          description: Work preview created successfully. Fields may be incomplete or empty and should be reviewed before saving.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/work'
+        '400':
+          description: Bad request - Invalid URL or unable to extract content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: Unprocessable Entity - URL is valid but content cannot be extracted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
   /works:
     get:
       summary: Query works
@@ -624,6 +671,7 @@ components:
         - amount
     volume:
       type: object
+      description: Volume information
       properties:
         id:
           type: string
@@ -651,15 +699,9 @@ components:
           type: integer
           description: Number of pages
           example: 192
-      required:
-        - title
-        - number
-        - price
-        - publicationDate
-        - isbn
-        - pages
     edition:
       type: object
+      description: Edition information
       properties:
         id:
           type: string
@@ -680,15 +722,13 @@ components:
           $ref: '#/components/schemas/format'
         colorMode:
           $ref: '#/components/schemas/colorMode'
-      required:
-        - publisher
-        - language
-        - country
-        - isOriginal
-        - format
-        - colorMode
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/volume'
     work:
       type: object
+      description: Work information
       properties:
         id:
           type: string
@@ -703,11 +743,10 @@ components:
           $ref: '#/components/schemas/person'
         illustrator:
           $ref: '#/components/schemas/person'
-      required:
-        - type
-        - title
-        - description
-        - author
+        editions:
+          type: array
+          items:
+            $ref: '#/components/schemas/edition'
     person:
       type: object
       properties:

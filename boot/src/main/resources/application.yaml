@@ -1,6 +1,6 @@
 spring:
   application:
-    name: geek-library
+    name: geek-library-bc
   
   datasource:
     url: jdbc:postgresql://localhost:5432/geeklibrary

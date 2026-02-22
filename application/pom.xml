@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.geekapps</groupId>
-        <artifactId>geek-library</artifactId>
+        <artifactId>geek-library-bc</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>geek-library-application</artifactId>
+    <artifactId>geek-library-bc-application</artifactId>
     <name>application</name>
     <dependencies>
         <dependency>
@@ -16,7 +16,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>geek-library-domain</artifactId>
+            <artifactId>geek-library-bc-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Testing dependencies -->

@@ -10,7 +10,7 @@
         <relativePath />
     </parent>
     <groupId>com.geekapps</groupId>
-    <artifactId>geek-library</artifactId>
+    <artifactId>geek-library-bc</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Geek Library</name>

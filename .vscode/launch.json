@@ -12,8 +12,9 @@
       "name": "GeekLibraryApplication",
       "request": "launch",
       "mainClass": "com.geekapps.geeklibrary.GeekLibraryApplication",
-      "projectName": "boot",
-      "envFile": "${workspaceFolder}/src/.env"
+      "projectName": "geek-library-bc-boot",
+      "envFile": "${workspaceFolder}/src/.env",
+      "args": "--spring.profiles.active=dev"
     }
   ]
 }

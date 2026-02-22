@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>geek-library-bc-client-api</artifactId>
+            <artifactId>geek-library-bc-rest-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

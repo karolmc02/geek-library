@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.geekapps</groupId>
-    <artifactId>geek-library-bc-client</artifactId>
+    <artifactId>geek-library-bc-api-first</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>geek-library-bc-client-api</artifactId>
-  <name>client-api</name>
+  <artifactId>geek-library-bc-rest-api</artifactId>
+  <name>bc-rest-api</name>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>

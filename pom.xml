@@ -19,7 +19,7 @@
         <module>application</module>
         <module>infraestructure</module>
         <module>boot</module>
-        <module>client</module>
+        <module>api-first</module>
     </modules>
     <properties>
         <java.version>25</java.version>

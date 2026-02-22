@@ -7,7 +7,7 @@
         <artifactId>geek-library-bc</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>boot</artifactId>
+    <artifactId>geek-library-bc-boot</artifactId>
     <name>boot</name>
     <dependencies>
         <dependency>

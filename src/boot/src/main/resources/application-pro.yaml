@@ -1,0 +1,10 @@
+spring:  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/geeklibrary
+    username: geekuser
+    password: geekpass123
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate

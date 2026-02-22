@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: geek-library-bc
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/geeklibrary
+    username: geekuser
+    password: geekpass123
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+  
+  docker:
+    compose:
+      enabled: true
+      file: dev/compose.yaml
+      lifecycle-management: start-only

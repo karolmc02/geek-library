@@ -12,7 +12,8 @@
       "name": "GeekLibraryApplication",
       "request": "launch",
       "mainClass": "com.geekapps.geeklibrary.GeekLibraryApplication",
-      "projectName": "boot"
+      "projectName": "boot",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }

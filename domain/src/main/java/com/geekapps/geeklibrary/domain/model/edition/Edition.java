@@ -19,6 +19,10 @@ public class Edition extends DomainEntity {
   private ColorMode colorMode;
   private final List<Volume> volumes;
 
+  public Edition() {
+    this.volumes = new ArrayList<>();
+  }
+
   @Default
   public Edition(final UUID id, final String publisher, final Language language,
       final Country country, final Boolean isOriginal, final Format format,

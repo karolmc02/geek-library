@@ -8,6 +8,9 @@ public class Person extends DomainEntity {
   private String firstName;
   private String lastName;
 
+  public Person() {
+  }
+
   @Default
   public Person(final UUID id, final String firstName, final String lastName) {
     super(id);

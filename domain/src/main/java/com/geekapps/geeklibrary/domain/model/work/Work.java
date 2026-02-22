@@ -22,6 +22,10 @@ public class Work extends AggregateRoot {
 
   protected List<Edition> editions;
 
+  public Work() {
+    this.editions = new ArrayList<>();
+  }
+
   @Default
   public Work(final UUID id, final WorkType type, final String title, final String description,
       final Person author, final Person illustrator) {

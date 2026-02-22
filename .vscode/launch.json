@@ -9,12 +9,21 @@
     },
     {
       "type": "java",
-      "name": "GeekLibraryApplication",
+      "name": "dev",
       "request": "launch",
       "mainClass": "com.geekapps.geeklibrary.GeekLibraryApplication",
       "projectName": "geek-library-bc-boot",
       "envFile": "${workspaceFolder}/src/.env",
       "args": "--spring.profiles.active=dev"
+    },
+    {
+      "type": "java",
+      "name": "pro",
+      "request": "launch",
+      "mainClass": "com.geekapps.geeklibrary.GeekLibraryApplication",
+      "projectName": "geek-library-bc-boot",
+      "envFile": "${workspaceFolder}/src/.env",
+      "args": "--spring.profiles.active=pro"
     }
   ]
 }

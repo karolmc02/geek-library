@@ -1,10 +1,14 @@
 spring:  
   datasource:
-    url: jdbc:postgresql://localhost:5432/geeklibrary
-    username: geekuser
-    password: geekpass123
+    url: jdbc:postgresql://ep-shiny-haze-a8r8mk9b-pooler.eastus2.azure.neon.tech/geek-library?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   
   jpa:
     hibernate:
       ddl-auto: validate
+
+  docker:
+    compose:
+      enabled: false

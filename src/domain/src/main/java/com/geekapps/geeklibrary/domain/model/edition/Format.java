@@ -13,6 +13,8 @@ public class Format extends DomainEntity {
   private Double widthCm;
   private Double heightCm;
 
+  public Format() {}
+
   @Default
   public Format(final UUID id, final String name, final String description, final Double widthCm,
       final Double heightCm) {

@@ -8,3 +8,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+app:
+  gemini:
+    api_key: ${GEMINI_API_KEY}
+    model: gemini-2.5-flash

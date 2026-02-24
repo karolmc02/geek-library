@@ -16,6 +16,8 @@ public class Volume extends DomainEntity {
   private String isbn;
   private Integer pages;
 
+  public Volume() {}
+
   @Default
   public Volume(final UUID id, final String title, final Integer number, final Money price,
       final LocalDate publicationDate, final String isbn, final Integer pages) {

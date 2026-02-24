@@ -1,4 +1,6 @@
 {
+  "java.format.settings.url": "eclipse-java-google-style.xml",
+  "java.format.settings.profile": "GoogleStyle",
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.dependency.packagePresentation": "hierarchical",

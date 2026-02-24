@@ -144,7 +144,7 @@
       id="org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_method_declaration"
       value="insert" />
     <setting id="org.eclipse.jdt.core.formatter.alignment_for_selector_in_method_invocation"
-      value="16" />
+      value="81" />
     <setting id="org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_switch"
       value="do not insert" />
     <setting id="org.eclipse.jdt.core.formatter.insert_space_after_unary_operator"
@@ -171,7 +171,7 @@
       value="insert" />
     <setting
       id="org.eclipse.jdt.core.formatter.alignment_for_selector_in_method_invocation.count_dependent"
-      value="16|4|48" />
+      value="81|-1|81" />
     <setting
       id="org.eclipse.jdt.core.formatter.insert_space_between_brackets_in_array_type_reference"
       value="do not insert" />

@@ -100,6 +100,12 @@ public class Edition extends DomainEntity {
     return List.copyOf(this.volumes);
   }
 
+  public void setVolumes(final List<Volume> volumes) {
+    if (volumes != null) {
+      this.volumes.addAll(volumes);
+    }
+  }
+
   public void addVolume(final Volume volume) {
     if (volume != null) {
       this.volumes.add(volume);
